@@ -1,0 +1,17 @@
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\bin\Debug\net6.0\PerceptronPP.exe
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\bin\Debug\net6.0\PerceptronPP.deps.json
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\bin\Debug\net6.0\PerceptronPP.runtimeconfig.json
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\bin\Debug\net6.0\PerceptronPP.dll
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\bin\Debug\net6.0\PerceptronPP.pdb
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.csproj.AssemblyReference.cache
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.GeneratedMSBuildEditorConfig.editorconfig
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.AssemblyInfoInputs.cache
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.AssemblyInfo.cs
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.csproj.CoreCompileInputs.cache
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.dll
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\refint\PerceptronPP.dll
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.pdb
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.genruntimeconfig.cache
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\ref\PerceptronPP.dll
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\bin\Debug\net6.0\MathNet.Numerics.dll
+D:\Progs\VisualStudio\C#\PerceptronPP\PerceptronPP\obj\Debug\net6.0\PerceptronPP.csproj.CopyComplete
