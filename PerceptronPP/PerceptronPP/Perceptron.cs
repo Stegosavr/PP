@@ -9,7 +9,7 @@ namespace PerceptronPP
 {
     internal class Perceptron
     {
-        public Func<double, double> ActivationFunction = MyMath.Arctan;
+        public Func<double, double> ActivationFunction = AtanCompute.Share.Compute;
         int LayersCount;
         public Layer[] Layers;
         int ForwardIterationsCount = 0;
