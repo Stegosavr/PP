@@ -1,4 +1,4 @@
-namespace PerceptronPP.Core;
+namespace PerceptronPP.Core.Tools.Computable;
 
 public class SigmoidComputable : IComputable
 {

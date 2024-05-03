@@ -1,5 +1,6 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using PerceptronPP.Core.Tools.Computable;
 
 namespace PerceptronPP.Core;
 
@@ -23,7 +24,7 @@ public class Perceptron
 	{
 		// for (var i = 0; i < LayersCount - 1; i++)
 		// {
-		// 	Layers[i].RandomizeWeights();
+		// 	Layers[i].SetWeights();
 		// }
 	}
 

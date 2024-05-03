@@ -1,4 +1,4 @@
-namespace PerceptronPP.Core.Errors;
+namespace PerceptronPP.Core.Exceptions;
 
 public class IncorrectNeuronCountException : Exception
 {

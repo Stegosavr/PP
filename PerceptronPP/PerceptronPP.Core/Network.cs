@@ -1,18 +1,19 @@
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
-using PerceptronPP.Core.Errors;
+using PerceptronPP.Core.Tools.Biases;
+using PerceptronPP.Core.Tools.Computable;
+using PerceptronPP.Core.Tools.Providers;
 
 namespace PerceptronPP.Core;
 
 public class Network
 {
-	// public readonly Perceptron Perceptron;
 	private readonly Layer[] _layers;
 	private readonly IComputable _activationComputable;
+	private readonly int[] _neuronCounts;
 
 	public Network(IComputable computable, params int[] neuronCounts)
 	{
 		_activationComputable = computable;
+		_neuronCounts = neuronCounts;
 		_layers = neuronCounts
 			.Where((_, i) => i < neuronCounts.Length - 1)
 			.Select((e, i) => new Layer(e, neuronCounts[i + 1]))
@@ -20,20 +21,36 @@ public class Network
 			.ToArray();
 	}
 
-	public Network RandomizeWeights(Func<int, double> randomizer)
+	public int GetNeuronCount(int layer)
 	{
-		foreach (var layer in _layers)
-			layer.RandomizeWeights(randomizer);
+		return _neuronCounts[layer];
+	}
+
+	public int GetNeuronCount()
+	{
+		return _neuronCounts.Sum();
+	}
+
+	public Network SetWeights(IWeightsProvidable provider)
+	{
+		for (var i = 0; i < _layers.Length; i++)
+			_layers[i].SetWeights(provider.GetAccessor(i));
+
 		return this;
 	}
 
-	public Network RandomizeWeights()
+	public Network SetBiases(IBiasProvidable biasProvidable)
 	{
-		return RandomizeWeights(count =>
+		for (var i = 0; i < _layers.Length; i++)
 		{
-			var distribution = (1 / Math.Sqrt(count));
-			return new Random().NextDouble() * distribution * 2 - distribution;
-		});
+			_layers[i].SetBiases(Enumerable
+				.Range(0, _neuronCounts[i])
+				.Select(n => biasProvidable.GetBias(i, n))
+				.ToArray()
+			);
+		}
+
+		return this;
 	}
 
 	public double[] Compute(params double[] input)

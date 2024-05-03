@@ -1,6 +1,8 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
-using PerceptronPP.Core.Errors;
+using PerceptronPP.Core.Exceptions;
+using PerceptronPP.Core.Tools.Computable;
+using PerceptronPP.Core.Tools.Weights;
 
 namespace PerceptronPP.Core;
 
@@ -17,15 +19,21 @@ public class Layer
 		_biases = CreateMatrix.Dense<double>(1, nextNeurons);
 	}
 
-	public void RandomizeWeights(Func<int, double> randomizer)
+	public void SetWeights(IWeightsAccessible weights)
 	{
 		for (var i = 0; i < _weights.RowCount; i++)
 		for (var j = 0; j < _weights.ColumnCount; j++)
 		{
-			_weights[i, j] = randomizer(_neuronsCount);
+			_weights[i, j] = weights.GetWeight(i, j);
 		}
 	}
 
+	public void SetBiases(params double[] biases)
+	{
+		for (var i = 0; i < _biases.ColumnCount; i++)
+			_biases[0, i] = biases[i];
+	}
+	
 	public Matrix<double> ComputeOutput(IComputable computable, Matrix<double> input)
 	{
 		if (input.ColumnCount != _neuronsCount) throw new IncorrectNeuronCountException();
