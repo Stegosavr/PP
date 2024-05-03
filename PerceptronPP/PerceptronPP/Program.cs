@@ -1,34 +1,24 @@
-﻿using System.Diagnostics;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
+﻿using PerceptronPP.Core;
 
-namespace PerceptronPP
+namespace PerceptronPP;
+
+internal static class Program
 {
-    public class Program
-    {
-        public static void Main()
-        {
-            var pow = Math.Pow(2, 31);
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            for (var i = 0; i < pow; i++)
-            {
-                var x = Math.Exp(i + 1);
-            }
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed.ToString());
+	public static void Main()
+	{
+		var network = new Network(new SigmoidComputable(), 3, 3).RandomizeWeights();
+		var result = network.Compute(1, 1, 1);
+		PrintDoubleArray(result);
+	}
 
-            // var network = new Perceptron(new[]
-            // {
-            //     new Layer(3,3),
-            //     new Layer(3,0),
-            // });
-            // network.Layers[0].Input = DenseMatrix.OfArray(new double[,] { { 1, 1, 1 } });
-            // //network.Layers[0].Weights = DenseMatrix.OfArray(new double[,] { { 0,0,0 }, { 0.5, 0.5, 0.5 }, { 0.5, 0.5, 0.5 } });
-            // network.Randomize();
-            // network.ForwardPropagation();
-            // var result = network.GetOutput();
-            // Console.WriteLine(result);
-        }
-    }
+	private static void PrintDoubleArray(double[] array)
+	{
+		if (array.Length == 0) return;
+		Console.Write(array[0]);
+		foreach (var number in array.Skip(1))
+			Console.Write($", {number}");
+		Console.WriteLine();
+	}
 }
+
+//network.Layers[0].Weights = DenseMatrix.OfArray(new double[,] { { 0,0,0 }, { 0.5, 0.5, 0.5 }, { 0.5, 0.5, 0.5 } });
