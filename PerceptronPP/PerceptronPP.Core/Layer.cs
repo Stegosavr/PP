@@ -3,6 +3,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 using PerceptronPP.Core.Exceptions;
 using PerceptronPP.Core.Tools.Computable;
 using PerceptronPP.Core.Tools.Weights;
+using PerceptronPP.Core.Tools.Weights.Provider;
 
 namespace PerceptronPP.Core;
 
@@ -19,7 +20,7 @@ public class Layer
 		_biases = CreateMatrix.Dense<double>(1, nextNeurons);
 	}
 
-	public void SetWeights(IWeightsAccessible weights)
+	public void SetWeights(IWeightsProvider weights)
 	{
 		for (var i = 0; i < _weights.RowCount; i++)
 		for (var j = 0; j < _weights.ColumnCount; j++)

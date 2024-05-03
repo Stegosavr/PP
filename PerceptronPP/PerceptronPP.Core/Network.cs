@@ -1,6 +1,6 @@
 using PerceptronPP.Core.Tools.Biases;
 using PerceptronPP.Core.Tools.Computable;
-using PerceptronPP.Core.Tools.Providers;
+using PerceptronPP.Core.Tools.Weights.Factory;
 
 namespace PerceptronPP.Core;
 
@@ -31,10 +31,10 @@ public class Network
 		return _neuronCounts.Sum();
 	}
 
-	public Network SetWeights(IWeightsProvidable provider)
+	public Network SetWeights(IWeightsFactory provider)
 	{
 		for (var i = 0; i < _layers.Length; i++)
-			_layers[i].SetWeights(provider.GetAccessor(i));
+			_layers[i].SetWeights(provider.Create(i));
 
 		return this;
 	}

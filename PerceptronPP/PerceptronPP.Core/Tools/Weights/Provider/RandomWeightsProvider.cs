@@ -1,10 +1,10 @@
-namespace PerceptronPP.Core.Tools.Weights;
+namespace PerceptronPP.Core.Tools.Weights.Provider;
 
-public class RandomWeightsAccessor : IWeightsAccessible
+public class RandomWeightsProvider : IWeightsProvider
 {
 	private readonly double _distribution;
 
-	public RandomWeightsAccessor(int layer)
+	public RandomWeightsProvider(int layer)
 	{
 		_distribution = (1 / Math.Sqrt(layer));
 	}
