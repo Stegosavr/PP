@@ -9,12 +9,15 @@ internal static class Program
 {
 	public static void Main()
 	{
-		var network = new Network(new SigmoidComputable(), 3, 3);
+		var network = new Network(new AtanComputable(), 3, 3);//3,4,3
 		network
+			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0, 0, 0 }, { 0.5, 0.5, 0.5 }, { 0.5, 0.5, 0.5 } } }))
 			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
 			.SetBiases(new BiasConstantProvider(1));
 		var result = network.Compute(1, 1, 1);
 		Tools.PrintDoubleArray(result);
+
+		network.BackPropagate(result, new[] { 1.0, 1.0, 1.0 });
 	}
 }
 

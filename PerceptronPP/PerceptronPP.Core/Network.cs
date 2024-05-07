@@ -33,7 +33,7 @@ public class Network
 
 	public Network SetWeights(IWeightsFactory provider)
 	{
-		for (var i = 0; i < _layers.Length; i++)
+		for (var i = 0; i < _layers.Length-1; i++)
 			_layers[i].SetWeights(provider.Create(i));
 
 		return this;
@@ -67,5 +67,15 @@ public class Network
 		}
 
 		return result;
+	}
+
+	public void BackPropagate(double[] networkOutput,double[] expectedNetworkOutput)
+    {
+		var output = 2 * (Layer.MatrixArray(networkOutput) - Layer.MatrixArray(expectedNetworkOutput));
+		_layers.Reverse().Skip(1).Aggregate
+		(
+			output,
+			(current, layer) => layer.BackPropagate(current)
+		);
 	}
 }
