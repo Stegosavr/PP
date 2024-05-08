@@ -10,11 +10,11 @@ namespace PerceptronPP.Core;
 public class Layer
 {
 	private readonly int _neuronsCount;
-	private readonly Matrix<double> _weights;
-	private readonly Matrix<double> _biases;
+	private Matrix<double> _weights;//deReadonlyized
+	private Matrix<double> _biases;//deReadonlyized
 
-	private readonly Matrix<double> _input;
-	private readonly Matrix<double> _neuronsInputSignalDerivative;
+	private Matrix<double> _input;
+	private readonly BackPropagationData _backPropData;
 
 	public Layer(int neurons, int nextNeurons = 0)
 	{
@@ -23,7 +23,7 @@ public class Layer
 		_biases = CreateMatrix.Dense<double>(1, nextNeurons);
 
 		_input = CreateMatrix.Dense<double>(1, _neuronsCount);
-		_neuronsInputSignalDerivative = CreateMatrix.Dense<double>(1, nextNeurons);
+		_backPropData = new BackPropagationData(neurons,nextNeurons);
 	}
 
 	public void SetWeights(IWeightsProvider weights)
@@ -49,37 +49,47 @@ public class Layer
 		for (var i = 0; i < output.ColumnCount; i++)
 		{
 			output[0, i] = computable.Compute(output[0, i]);
-			_neuronsInputSignalDerivative[0, i] = computable.ComputeDerivative(output[0, i]);
+			_backPropData.NeuronsInputSignalDerivative[0, i] = computable.ComputeDerivative(output[0, i]);
 		}
 
-		input.CopyTo(_input);
+		//input.CopyTo(_input);
+		_input = input;
 
 		return output;
 	}
 
 	public Matrix<double> BackPropagate(Matrix<double> output)
 	{
-		var weightsDerivative = CreateMatrix.Dense<double>(_weights.RowCount,_weights.ColumnCount);
-		var biasesDerivative = CreateMatrix.Dense<double>(1,_biases.ColumnCount);
-		var activationDerivative = CreateMatrix.Dense<double>(1,_neuronsCount);
-
+		Matrix<double> weightsDer, biasesDer, activationsDer, neuronInputDer;
+		(weightsDer, biasesDer, activationsDer, neuronInputDer) = 
+			(_backPropData.WeightsDerivative, _backPropData.BiasesDerivative, 
+			_backPropData.ActivationDerivative,_backPropData.NeuronsInputSignalDerivative);
+		
 		for (var i = 0; i < _weights.RowCount; i++)
         {
 			for (var j = 0; j < _weights.ColumnCount; j++)
-				weightsDerivative[i, j] = output[0,j] * _neuronsInputSignalDerivative[0, j] * _input[0, i];
+				weightsDer[i, j] += output[0,j] * neuronInputDer[0, j] * _input[0, i];
         }
 		for (var j = 0; j < _biases.ColumnCount; j++)
         {
-			biasesDerivative[0, j] = output[0, j] * _neuronsInputSignalDerivative[0, j];
+			biasesDer[0, j] += output[0, j] * neuronInputDer[0, j];
 		}
 		for (var i = 0; i < _weights.RowCount; i++)
 		{
+			var activationsDerSum = 0.0;
 			for (var j = 0; j < _weights.ColumnCount; j++)
-				activationDerivative[0,i] += output[0, j] * _neuronsInputSignalDerivative[0, j] * _weights[i, j];
-			activationDerivative[0,i] /= _weights.ColumnCount;
+				activationsDerSum += output[0, j] * neuronInputDer[0, j] * _weights[i, j];
+			activationsDer[0,i] += activationsDerSum / _weights.ColumnCount;
 		}
+		return activationsDer;
+	}
 
-		return activationDerivative;
+	public void GradientDescend(double coefficient)
+    {
+		_weights -= _backPropData.WeightsDerivative * coefficient;
+		_biases -= _backPropData.BiasesDerivative * coefficient;
+
+		_backPropData.Clear();
 	}
 
 	public static Matrix<double> MatrixArray(double[] input)

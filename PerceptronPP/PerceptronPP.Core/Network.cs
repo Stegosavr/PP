@@ -69,6 +69,16 @@ public class Network
 		return result;
 	}
 
+	public double CalculateCost(double[] output, double[] expectedOutput)
+	{
+		double cost = 0;
+		for (int i =0; i < output.Length; i++)
+        {
+			cost += Math.Pow(output[i]-expectedOutput[i],2);
+        }
+		return cost;
+	}
+
 	public void BackPropagate(double[] networkOutput,double[] expectedNetworkOutput)
     {
 		var output = 2 * (Layer.MatrixArray(networkOutput) - Layer.MatrixArray(expectedNetworkOutput));
@@ -78,4 +88,10 @@ public class Network
 			(current, layer) => layer.BackPropagate(current)
 		);
 	}
+
+	public void GradientDescend(double coefficient)
+    {
+		foreach (var layer in _layers.SkipLast(1))
+			layer.GradientDescend(coefficient);
+    }
 }
