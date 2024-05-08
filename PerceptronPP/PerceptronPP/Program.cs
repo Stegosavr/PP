@@ -19,10 +19,17 @@ internal static class Program
 		var expected = new double[] { 0,1};
 		for (int i = 0; i < 100; i++)
         {
+			Console.Clear();
+
 			result = network.Compute(1, 1);
-			Console.WriteLine(network.CalculateCost(result,expected));
+
+			Console.WriteLine("Cost: " + network.CalculateCost(result, expected));
+			Console.WriteLine("Output:");
 			Tools.PrintDoubleArray(result);
-			Console.WriteLine();
+			Console.WriteLine("Expected ouput: \n" + String.Join(", ", expected.Select(e => e.ToString())));
+
+			Thread.Sleep(200);
+
 			network.BackPropagate(result, expected);
 			network.GradientDescend(0.01);
 		}
