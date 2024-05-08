@@ -41,10 +41,10 @@ public class Network
 
 	public Network SetBiases(IBiasProvidable biasProvidable)
 	{
-		for (var i = 0; i < _layers.Length; i++)
+		for (var i = 0; i < _layers.Length-1; i++)
 		{
 			_layers[i].SetBiases(Enumerable
-				.Range(0, _neuronCounts[i])
+				.Range(0, _neuronCounts[i+1])
 				.Select(n => biasProvidable.GetBias(i, n))
 				.ToArray()
 			);

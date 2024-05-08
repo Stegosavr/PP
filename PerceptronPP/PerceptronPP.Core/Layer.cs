@@ -23,7 +23,7 @@ public class Layer
 		_biases = CreateMatrix.Dense<double>(1, nextNeurons);
 
 		_input = CreateMatrix.Dense<double>(1, _neuronsCount);
-		_neuronsInputSignalDerivative = CreateMatrix.Dense<double>(1, _neuronsCount);
+		_neuronsInputSignalDerivative = CreateMatrix.Dense<double>(1, nextNeurons);
 	}
 
 	public void SetWeights(IWeightsProvider weights)
@@ -60,13 +60,13 @@ public class Layer
 	public Matrix<double> BackPropagate(Matrix<double> output)
 	{
 		var weightsDerivative = CreateMatrix.Dense<double>(_weights.RowCount,_weights.ColumnCount);
-		var biasesDerivative = CreateMatrix.Dense<double>(1,_biases.RowCount);
-		var activationDerivative = CreateMatrix.Dense<double>(_neuronsCount,1);
+		var biasesDerivative = CreateMatrix.Dense<double>(1,_biases.ColumnCount);
+		var activationDerivative = CreateMatrix.Dense<double>(1,_neuronsCount);
 
 		for (var i = 0; i < _weights.RowCount; i++)
         {
 			for (var j = 0; j < _weights.ColumnCount; j++)
-				weightsDerivative[i, j] = output[0, j] * _neuronsInputSignalDerivative[0, i] * _input[0, i];
+				weightsDerivative[i, j] = output[0,j] * _neuronsInputSignalDerivative[0, j] * _input[0, i];
         }
 		for (var j = 0; j < _biases.RowCount; j++)
         {
@@ -75,8 +75,8 @@ public class Layer
 		for (var i = 0; i < _weights.RowCount; i++)
 		{
 			for (var j = 0; j < _weights.ColumnCount; j++)
-				activationDerivative[i, 0] += output[0, j] * _neuronsInputSignalDerivative[0, i] * _weights[i, j];
-			activationDerivative[i, 0] /= _weights.ColumnCount;
+				activationDerivative[0,i] += output[0, j] * _neuronsInputSignalDerivative[0, j] * _weights[i, j];
+			activationDerivative[0,i] /= _weights.ColumnCount;
 		}
 
 		return activationDerivative;

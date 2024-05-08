@@ -9,7 +9,7 @@ internal static class Program
 {
 	public static void Main()
 	{
-		var network = new Network(new AtanComputable(), 3, 3);//3,4,3
+		var network = new Network(new AtanComputable(), 3,4, 6,10,340,3);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0, 0, 0 }, { 0.5, 0.5, 0.5 }, { 0.5, 0.5, 0.5 } } }))
 			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
