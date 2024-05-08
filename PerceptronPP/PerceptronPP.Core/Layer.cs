@@ -68,7 +68,7 @@ public class Layer
 			for (var j = 0; j < _weights.ColumnCount; j++)
 				weightsDerivative[i, j] = output[0,j] * _neuronsInputSignalDerivative[0, j] * _input[0, i];
         }
-		for (var j = 0; j < _biases.RowCount; j++)
+		for (var j = 0; j < _biases.ColumnCount; j++)
         {
 			biasesDerivative[0, j] = output[0, j] * _neuronsInputSignalDerivative[0, j];
 		}
