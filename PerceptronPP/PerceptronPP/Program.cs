@@ -9,7 +9,7 @@ internal static class Program
 {
 	public static void Main()
 	{
-		var network = new Network(new EmptyComputable(), 2,1,100,2);//3,4,3
+		var network = new Network(new EmptyComputable(), 2,1,2);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
 			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
@@ -22,8 +22,9 @@ internal static class Program
 			Console.Clear();
 
 			result = network.Compute(1, 1);
-
-			Console.WriteLine("Cost: " + network.CalculateCost(result, expected));
+			network.CalculateCost(result, expected);
+			Console.WriteLine("Cost: " + network.GetCost());
+			network.ResetCost();
 			Console.WriteLine("Output:");
 			Tools.PrintDoubleArray(result);
 			Console.WriteLine("Expected ouput: \n" + String.Join(", ", expected.Select(e => e.ToString())));

@@ -11,6 +11,7 @@ public class Network
 	private readonly int[] _neuronCounts;
 
 	private int _iterations;
+	private double _cost;
 
 	public Network(IComputable computable, params int[] neuronCounts)
 	{
@@ -71,15 +72,23 @@ public class Network
 		return result;
 	}
 
-	public double CalculateCost(double[] output, double[] expectedOutput)
+	public void CalculateCost(double[] output, double[] expectedOutput)
 	{
-		double cost = 0;
 		for (int i =0; i < output.Length; i++)
         {
-			cost += Math.Pow(output[i]-expectedOutput[i],2);
+			_cost += Math.Pow(output[i]-expectedOutput[i],2);
         }
-		return cost;
 	}
+
+	public double GetCost()
+    {
+		return _cost;
+    }
+
+	public void ResetCost()
+    {
+		_cost = 0;
+    }
 
 	public void BackPropagate(double[] networkOutput,double[] expectedNetworkOutput)
     {
@@ -95,6 +104,8 @@ public class Network
 
 	public void GradientDescend(double coefficient)
     {
+		if (_iterations == 0) throw new InvalidOperationException("Back propagation needs to be called first");
+
 		foreach (var layer in _layers.SkipLast(1))
 			layer.GradientDescend(coefficient, _iterations);
 
