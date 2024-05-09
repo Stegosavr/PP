@@ -84,10 +84,10 @@ public class Layer
 		return activationsDer;
 	}
 
-	public void GradientDescend(double coefficient)
+	public void GradientDescend(double coefficient, int iterations)
     {
-		_weights -= _backPropData.WeightsDerivative * coefficient;
-		_biases -= _backPropData.BiasesDerivative * coefficient;
+		_weights -= _backPropData.WeightsDerivative / iterations * coefficient;
+		_biases -= _backPropData.BiasesDerivative / iterations * coefficient;
 
 		_backPropData.Clear();
 	}

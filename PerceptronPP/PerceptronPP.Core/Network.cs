@@ -10,6 +10,8 @@ public class Network
 	private readonly IComputable _activationComputable;
 	private readonly int[] _neuronCounts;
 
+	private int _iterations;
+
 	public Network(IComputable computable, params int[] neuronCounts)
 	{
 		_activationComputable = computable;
@@ -87,11 +89,15 @@ public class Network
 			output,
 			(current, layer) => layer.BackPropagate(current)
 		);
+
+		_iterations++;
 	}
 
 	public void GradientDescend(double coefficient)
     {
 		foreach (var layer in _layers.SkipLast(1))
-			layer.GradientDescend(coefficient);
-    }
+			layer.GradientDescend(coefficient, _iterations);
+
+		_iterations = 0;
+	}
 }
