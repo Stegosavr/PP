@@ -19,11 +19,10 @@ namespace PerceptronPP.Core
                 {
                     //Thread.Sleep();
                     network.GradientDescend(learningCoefficient);
-                    Console.Clear();
-
                     Console.WriteLine(network.GetCost());
                     Console.WriteLine(i);
-                    Thread.Sleep(10);
+                    var (_, top) = Console.GetCursorPosition();
+                    Console.SetCursorPosition(0, top - 2);
                     network.ResetCost();
                 }
             }
@@ -32,14 +31,44 @@ namespace PerceptronPP.Core
                 catch { }
         }
 
-        public static void Iterate(Network network, double[] input, double[] expectedOutput)
+        public static void Test(Network network, double[][] testData, double[][] expectedOutputs)
+        {
+            Console.Clear();
+            int count = 0;
+            int correct = 0;
+            double[] output;
+            for (int i = 0; i < testData.Length; i++)
+            {
+                output = Iterate(network, testData[i], expectedOutputs[i]);
+                if (Check(output, expectedOutputs[i]))
+                    correct++;
+                count++;
+
+                Console.WriteLine(correct/(double)count * 100);
+                Console.WriteLine(i);
+                var (_, top) = Console.GetCursorPosition();
+                Console.SetCursorPosition(0, top - 2);
+            }
+
+        }
+
+        private static bool Check(double[] output, double[] expectedOutput)
+        {
+            var label = expectedOutput.Select((e,i)=>Tuple.Create(e,i)).Where(tuple => tuple.Item1 == 1).First().Item2;
+            var outputLabel = output.Select((e, i) => Tuple.Create(e, i)).OrderByDescending(tuple => tuple.Item1).First().Item2;
+            if (label == outputLabel) return true;
+            return false;
+        }
+
+        public static double[] Iterate(Network network, double[] input, double[] expectedOutput)
         {
             var output = network.Compute(input);
             //Console.WriteLine(String.Join(" ,",output));
             //Console.WriteLine(String.Join(" ,", expectedOutput));
-
-            network.BackPropagate(output, expectedOutput);
+            network.BackPropagate(output,expectedOutput);
             network.CalculateCost(output, expectedOutput);
+            
+            return output;
         }
 
         public static double[] IntToExpectedOutputArray(int value)
