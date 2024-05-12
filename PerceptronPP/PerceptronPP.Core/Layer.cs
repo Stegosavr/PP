@@ -76,8 +76,7 @@ public class Layer
 
 	public Matrix<double> BackPropagate(Matrix<double> output)
 	{
-		Matrix<double> weightsDer, biasesDer, activationsDer, neuronInputDer;
-		(weightsDer, biasesDer, activationsDer, neuronInputDer) = 
+		var (weightsDer, biasesDer, activationsDer, neuronInputDer) = 
 			(_backPropData.WeightsDerivative, _backPropData.BiasesDerivative, 
 			_backPropData.ActivationDerivative,_backPropData.NeuronsInputSignalDerivative);
 		var outputByinputDer = CreateMatrix.Dense<double>(1,output.ColumnCount);
