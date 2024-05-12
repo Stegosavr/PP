@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Accord.IO;
+﻿using Accord.IO;
 using PerceptronPP.Core;
 using PerceptronPP.Core.Tools.Biases;
 using PerceptronPP.Core.Tools.Computable;
@@ -29,13 +28,8 @@ internal static class Program
 
 		var learner = new Learner(Computable, NeuronCounts);
 
-		var stopwatch = new Stopwatch();
-		stopwatch.Start();
-		var data = learner.Learn(GetSample(imagesData), GetLabel(labelsData), 12, 1);
-		stopwatch.Stop();
-		Console.WriteLine($"Last cost: {data[0]}");
-		Console.WriteLine($"Total iterations: {data[1]}");
-		Console.WriteLine($"Learning elapsed: {stopwatch.Elapsed.ToString()}");
+		var learnTime = learner.Learn(GetSample(imagesData), GetLabel(labelsData), 12, 1);
+		Console.WriteLine($"Learning elapsed {learnTime.ToString()}");
 	}
 
 	private static IEnumerable<int> GetLabel(IdxReader reader)
