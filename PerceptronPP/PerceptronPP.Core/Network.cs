@@ -63,6 +63,8 @@ public class Network
 			Layer.MatrixArray(input),
 			(current, layer) => layer.ComputeOutput(_activationComputable, current)
 		);
+		//matrix = _layers.SkipLast(1).Last().ComputeLastOutput(matrix);//////
+
 		var result = new double[matrix.ColumnCount];
 		for (var i = 0; i < matrix.ColumnCount; i++)
 		{

@@ -58,6 +58,22 @@ public class Layer
 		return output;
 	}
 
+	public Matrix<double> ComputeLastOutput(Matrix<double> input)
+	{
+		if (input.ColumnCount != _neuronsCount) throw new IncorrectNeuronCountException();
+		var output = input * _weights + _biases;
+
+		
+		output = SoftmaxComputable.Compute(output);
+		_backPropData.NeuronsInputSignalDerivative = SoftmaxComputable.ComputeDerivative(output);
+
+
+		//input.CopyTo(_input);
+		_input = input;
+
+		return output;
+	}
+
 	public Matrix<double> BackPropagate(Matrix<double> output)
 	{
 		Matrix<double> weightsDer, biasesDer, activationsDer, neuronInputDer;

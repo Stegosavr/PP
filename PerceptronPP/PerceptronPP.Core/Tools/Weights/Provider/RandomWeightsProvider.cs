@@ -11,6 +11,6 @@ public class RandomWeightsProvider : IWeightsProvider
 	
 	public double GetWeight(int _, int __)
 	{
-		return new Random().NextDouble() * _distribution * 2 - _distribution;
+		return new Random().NextDouble() * _distribution * 50 - _distribution * 25;
 	}
 }

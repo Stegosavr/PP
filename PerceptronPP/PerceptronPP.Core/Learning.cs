@@ -15,26 +15,36 @@ namespace PerceptronPP.Core
             {
                 Iterate(network, trainData[i], expectedOutputs[i]);
 
-                if (i + 1 % batchSize == 0)
+                if ((i + 1) % batchSize == 0)
                 {
+                    //Thread.Sleep();
                     network.GradientDescend(learningCoefficient);
+                    Console.Clear();
+
+                    Console.WriteLine(network.GetCost());
+                    Console.WriteLine(i);
+                    Thread.Sleep(0);
                     network.ResetCost();
                 }
             }
             if (trainData.Length % batchSize == 0)
-                network.GradientDescend(learningCoefficient);
+                try { network.GradientDescend(learningCoefficient); }
+                catch { }
         }
 
         public static void Iterate(Network network, double[] input, double[] expectedOutput)
         {
             var output = network.Compute(input);
+            //Console.WriteLine(String.Join(" ,",output));
+            //Console.WriteLine(String.Join(" ,", expectedOutput));
+
             network.BackPropagate(output, expectedOutput);
             network.CalculateCost(output, expectedOutput);
         }
 
         public static double[] IntToExpectedOutputArray(int value)
         {
-            return Enumerable.Range(0, 9).Select((e, i) => i == value ? 1.0 : 0.0).ToArray();
+            return Enumerable.Range(0, 10).Select((e, i) => i == value ? 1.0 : 0.0).ToArray();
         }
     }
 }
