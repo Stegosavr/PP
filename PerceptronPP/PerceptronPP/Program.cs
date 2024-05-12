@@ -11,7 +11,7 @@ internal static class Program
 {
 	public static void Main()
 	{
-		using (var rider = new IdxReader(@"..\..\..\..\..\Datasets\MNIST\t10k-labels.idx1-ubyte")) { var f = rider.ReadVector(); }
+		//using (var rider = new IdxReader(@"..\..\..\..\..\Datasets\MNIST\t10k-labels.idx1-ubyte")) { var f = rider.ReadVector(); }
 
 			var network = new Network(new SigmoidComputable(), 784, 16, 16,10);//3,4,3
 		network
@@ -34,9 +34,9 @@ internal static class Program
             }
         }
 
-        using (var mnist = new IdxReader(@"..\..\..\..\..\Datasets\MNIST\train-images.idx3-ubyte"))
+        using (var mnist = new IdxReader(@"..\..\..\..\Datasets\MNIST\train-images.idx3-ubyte"))
 		{
-            using (var mnist2 = new IdxReader(@"..\..\..\..\..\Datasets\MNIST\train-labels.idx1-ubyte"))
+            using (var mnist2 = new IdxReader(@"..\..\..\..\Datasets\MNIST\train-labels.idx1-ubyte"))
             {
                 Learning.Learn(network, 12, 1, GetSample(mnist).ToArray(),GetLabel(mnist2).Select(e=>Learning.IntToExpectedOutputArray(e)).ToArray());
             }
