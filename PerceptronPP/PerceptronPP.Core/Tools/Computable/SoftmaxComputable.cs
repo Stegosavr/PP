@@ -4,7 +4,7 @@ namespace PerceptronPP.Core.Tools.Computable;
 
 public class SoftmaxComputable //: IComputable //Only for last (output) layer
 {
-	public string Name { get; } = nameof(AtanComputable);
+	public string Name { get; } = nameof(SoftmaxComputable);
 	public static Matrix<double> Compute(Matrix<double> x)
 	{
 		var expArray = CreateMatrix.Dense<double>(x.RowCount, x.ColumnCount);

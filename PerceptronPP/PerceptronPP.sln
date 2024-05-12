@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerceptronPP", "PerceptronP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerceptronPP.Core", "PerceptronPP.Core\PerceptronPP.Core.csproj", "{BE2606AA-781A-473F-BEE6-28138F363DC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerceptronPP.Learner", "PerceptronPP.Learner\PerceptronPP.Learner.csproj", "{57E1BDA1-D3E1-481F-81B0-E0E6C4B7FBAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BE2606AA-781A-473F-BEE6-28138F363DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE2606AA-781A-473F-BEE6-28138F363DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE2606AA-781A-473F-BEE6-28138F363DC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E1BDA1-D3E1-481F-81B0-E0E6C4B7FBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E1BDA1-D3E1-481F-81B0-E0E6C4B7FBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E1BDA1-D3E1-481F-81B0-E0E6C4B7FBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E1BDA1-D3E1-481F-81B0-E0E6C4B7FBAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

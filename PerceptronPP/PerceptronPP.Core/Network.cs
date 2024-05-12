@@ -76,7 +76,7 @@ public class Network
 
 	public void CalculateCost(double[] output, double[] expectedOutput)
 	{
-		for (int i =0; i < output.Length; i++)
+		for (var i =0; i < output.Length; i++)
         {
 			_cost += Math.Pow(output[i]-expectedOutput[i],2);
         }
