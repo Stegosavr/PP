@@ -19,28 +19,36 @@ internal static class Program
 			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
 			.SetBiases(new BiasConstantProvider(0));
 
-        IEnumerable<double[]> GetSample(Accord.IO.IdxReader reader)
+        IEnumerable<double[]> GetSample(IdxReader reader)
 		{
 			for (int i=0;i<reader.Samples;i++)
 			{
 				yield return ((byte[])reader.ReadVector()).Select(e=>(int)e/255.0).ToArray();
 			}
 		}
-        IEnumerable<int> GetLabel(Accord.IO.IdxReader reader)
+        IEnumerable<int> GetLabel(IdxReader reader)
         {
             for (int i = 0; i < reader.Samples; i++)
             {
-                yield return (int)(byte)reader.ReadValue();
+                yield return (byte)reader.ReadValue();
             }
         }
 
-        using (var mnist = new IdxReader(@"..\..\..\..\Datasets\MNIST\train-images.idx3-ubyte"))
-		{
-            using (var mnist2 = new IdxReader(@"..\..\..\..\Datasets\MNIST\train-labels.idx1-ubyte"))
-            {
-                Learning.Learn(network, 12, 1, GetSample(mnist).ToArray(),GetLabel(mnist2).Select(e=>Learning.IntToExpectedOutputArray(e)).ToArray());
-            }
-        }
+
+        using var mnist = new IdxReader(@"..\..\..\..\Datasets\MNIST\train-images.idx3-ubyte");
+        using var mnist2 = new IdxReader(@"..\..\..\..\Datasets\MNIST\train-labels.idx1-ubyte");
+
+
+        var images = GetSample(mnist).ToArray();
+        var labels = GetLabel(mnist2).ToArray();
+        var labeledImages = labels.Select((label,i) => Tuple.Create(label,images[i]));
+        var sorted = labeledImages.OrderBy(x => x.Item1).Select(tuple => Tuple.Create(Learning.IntToExpectedOutputArray(tuple.Item1),tuple.Item2));
+        var input1 = sorted.Select(x => x.Item1).ToArray();
+        var input2 = sorted.Select(x => x.Item2).ToArray();
+
+
+
+        Learning.Learn(network, 12, 1, input2, input1);
 
 
 

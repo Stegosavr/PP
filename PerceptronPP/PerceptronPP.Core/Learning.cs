@@ -23,7 +23,7 @@ namespace PerceptronPP.Core
 
                     Console.WriteLine(network.GetCost());
                     Console.WriteLine(i);
-                    Thread.Sleep(0);
+                    Thread.Sleep(10);
                     network.ResetCost();
                 }
             }
