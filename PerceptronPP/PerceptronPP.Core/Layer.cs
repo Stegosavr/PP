@@ -48,8 +48,8 @@ public class Layer
 
 		for (var i = 0; i < output.ColumnCount; i++)
 		{
-			output[0, i] = computable.Compute(output[0, i]);
 			_backPropData.NeuronsInputSignalDerivative[0, i] = computable.ComputeDerivative(output[0, i]);
+			output[0, i] = computable.Compute(output[0, i]);
 		}
 
 		//input.CopyTo(_input);
@@ -108,7 +108,7 @@ public class Layer
 	public void GradientDescent(double coefficient, int iterations)
     {
 		_weights -= _backPropData.WeightsDerivative / iterations * coefficient;
-		_biases -= _backPropData.BiasesDerivative / iterations * coefficient;
+		_biases -= _backPropData.BiasesDerivative / iterations  * coefficient;
 
 		_backPropData.Clear();
 	}
