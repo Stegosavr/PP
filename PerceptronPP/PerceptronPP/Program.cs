@@ -43,12 +43,22 @@ internal static class Program
         var labels = GetLabel(mnist2).ToArray();
         var labeledImages = labels.Select((label,i) => Tuple.Create(label,images[i]));
         var sorted = labeledImages.OrderBy(x => x.Item1).Select(tuple => Tuple.Create(Learning.IntToExpectedOutputArray(tuple.Item1),tuple.Item2));
+        var dict = labeledImages.ToLookup(e => e.Item1, e => e.Item2);
+        var hui = dict.ToDictionary(e=>e.Key,e=>e.Skip(1).ToArray());
         var input1 = sorted.Select(x => x.Item1).ToArray();
         var input2 = sorted.Select(x => x.Item2).ToArray();
 
 
 
         Learning.Learn(network, 12, 1, input2, input1);
+
+        using var mnist3 = new IdxReader(@"..\..\..\..\Datasets\MNIST\t10k-images.idx3-ubyte");
+        using var mnist4 = new IdxReader(@"..\..\..\..\Datasets\MNIST\t10k-labels.idx1-ubyte");
+
+        var images2 = GetSample(mnist3).ToArray();
+        var labels2 = GetLabel(mnist4).Select(e=>Learning.IntToExpectedOutputArray(e)).ToArray();
+
+        Learning.Test(network,images2,labels2);
 
 
 
