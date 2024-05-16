@@ -16,7 +16,7 @@ internal static class Program
 			var network = new Network(new SigmoidComputable(), 784, 16, 16,10);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
-			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
+			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount,WeightsProviderType.GaussianRandom,1))
 			.SetBiases(new BiasConstantProvider(0));
 
         IEnumerable<double[]> GetSample(IdxReader reader)

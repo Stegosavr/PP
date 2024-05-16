@@ -80,21 +80,27 @@ public class Layer
 		(weightsDer, biasesDer, activationsDer, neuronInputDer) = 
 			(_backPropData.WeightsDerivative, _backPropData.BiasesDerivative, 
 			_backPropData.ActivationDerivative,_backPropData.NeuronsInputSignalDerivative);
-		
+		var outputByinputDer = CreateMatrix.Dense<double>(1,output.ColumnCount);
+		for (var j = 0; j < _biases.ColumnCount; j++)
+		{
+			outputByinputDer[0, j] += output[0, j] * neuronInputDer[0, j];
+		}
+
+
 		for (var i = 0; i < _weights.RowCount; i++)
         {
 			for (var j = 0; j < _weights.ColumnCount; j++)
-				weightsDer[i, j] += output[0,j] * neuronInputDer[0, j] * _input[0, i];
+				weightsDer[i, j] += outputByinputDer[0, j] * _input[0, i];
         }
 		for (var j = 0; j < _biases.ColumnCount; j++)
         {
-			biasesDer[0, j] += output[0, j] * neuronInputDer[0, j];
+			biasesDer[0, j] += outputByinputDer[0, j];
 		}
 		for (var i = 0; i < _weights.RowCount; i++)
 		{
 			var activationsDerSum = 0.0;
 			for (var j = 0; j < _weights.ColumnCount; j++)
-				activationsDerSum += output[0, j] * neuronInputDer[0, j] * _weights[i, j];
+				activationsDerSum += outputByinputDer[0, j] * _weights[i, j];
 			activationsDer[0,i] += activationsDerSum / _weights.ColumnCount;
 		}
 		return activationsDer;
