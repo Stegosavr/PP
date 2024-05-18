@@ -23,7 +23,7 @@ namespace PerceptronPP.Core
                 if ((i + 1) % batchSize == 0)
                 {
                     //Thread.Sleep();
-                    network.GradientDescend(coef);
+                    network.GradientDescent(coef);
                     if ((i + 1) % (batchSize * 100) == 0)
                     {
                         Console.WriteLine(network.GetCost());
@@ -35,7 +35,7 @@ namespace PerceptronPP.Core
                 }
             }
             if (trainData.Length % batchSize == 0)
-                try { network.GradientDescend(learningCoefficient); }
+                try { network.GradientDescent(learningCoefficient); }
                 catch { }
         }
 
