@@ -1,8 +1,9 @@
-namespace PerceptronPP.Core.Tools.Computable;
+using MathNet.Numerics.LinearAlgebra;
+namespace PerceptronPP.Core.Tools.Optimizers;
 
-public interface IComputable
+public interface IOptimizer
 {
 	public string Name { get; }
-	public double Compute(double x);
-	public double ComputeDerivative(double x);
+	public double GradientDescent(Matrix<double> currentParameters, 
+		GradientDescentData data, double learningCoefficient);
 }
