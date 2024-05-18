@@ -38,14 +38,14 @@ public class Learner
 			CalculateCost(network, output, expectedOutput);
 			if ((i + 1) % batchSize != 0) continue;
 
-			network.GradientDescend(learningCoefficient);
+			network.GradientDescent(learningCoefficient);
 			lastCost = network.GetCost() / batchSize;
 			WriteStepData(lastCost, i);
 			network.ResetCost();
 		}
 
 		if ((i) % batchSize == 0) return new[] { lastCost, i };
-		network.GradientDescend(learningCoefficient);
+		network.GradientDescent(learningCoefficient);
 		var correctedLastCost = network.GetCost() / (i % batchSize);
 		WriteStepData(correctedLastCost, i);
 		return new[] { correctedLastCost, i };
@@ -59,14 +59,17 @@ public class Learner
 		Console.SetCursorPosition(0, top - 2);
 	}
 
-	public static double CalculateCost(Network network, Matrix<double> input, Matrix<double> expectedOutput) { }
+	public static double CalculateCost(Network network, Matrix<double> input, Matrix<double> expectedOutput)
+	{
+		return 0;
+	}
 
 	public void BackPropagate(Network network, Matrix<double> output, Matrix<double> expectedOutput)
 	{
 		var data = 2 * output - expectedOutput;
-		Enumerable.Range(0, _neuronCounts.Length - 1).Select(i =>
-			network.GetLayer(i).BackPropagate()
-			);
+		// Enumerable.Range(0, _neuronCounts.Length - 1).Select(i =>
+		// 	network.GetLayer(i).BackPropagate()
+		// 	);
 	}
 
 	private static double[] IntToExpectedDoubleArray(int number)

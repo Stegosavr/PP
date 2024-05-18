@@ -1,3 +1,4 @@
+using MathNet.Numerics.LinearAlgebra;
 using PerceptronPP.Core.Tools.Biases;
 using PerceptronPP.Core.Tools.Computable;
 using PerceptronPP.Core.Tools.Weights.Factory;
@@ -58,11 +59,7 @@ public class Network
 
 	public double[] Compute(params double[] input)
 	{
-		var matrix = _layers.SkipLast(1).Aggregate
-		(
-			Layer.MatrixArray(input),
-			(current, layer) => layer.ComputeOutput(_activationComputable, current)
-		);
+		var matrix = ComputeMatrix(input);
 		//matrix = _layers.SkipLast(1).Last().ComputeLastOutput(matrix);//////
 
 		var result = new double[matrix.ColumnCount];
@@ -72,6 +69,15 @@ public class Network
 		}
 
 		return result;
+	}
+
+	public Matrix<double> ComputeMatrix(double[] input)
+	{
+		return _layers.SkipLast(1).Aggregate
+		(
+			Layer.MatrixArray(input),
+			(current, layer) => layer.ComputeOutput(_activationComputable, current)
+		);
 	}
 
 	public void CalculateCost(double[] output, double[] expectedOutput)
@@ -112,5 +118,10 @@ public class Network
 			layer.GradientDescend(coefficient, _iterations);
 
 		_iterations = 0;
+	}
+
+	public Layer GetLayer(int layer)
+	{
+		return _layers[layer];
 	}
 }
