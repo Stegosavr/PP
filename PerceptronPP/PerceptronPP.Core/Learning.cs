@@ -8,21 +8,29 @@ namespace PerceptronPP.Core
 {
     public class Learning
     {
-        public static void Learn(Network network, int batchSize, double learningCoefficient, double[][] trainData, double[][] expectedOutputs)
+        public static void Learn(Network network, int batchSize, double learningCoefficient, double[][] trainData, int[] expectedOutputs)
         {
+            //Console.
+            var coef = learningCoefficient;
+            var delta = (learningCoefficient - 0.01) / trainData.Length;
             double[] output;
             for (int i = 0; i < trainData.Length; i++)
             {
-                Iterate(network, trainData[i], expectedOutputs[i]);
-
+                Iterate(network, trainData[i],  expectedOutputs[i]);
+                coef -= delta;
+                if ((i + 1) % 15000 == 0 && batchSize != 1)
+                    batchSize-=1;
                 if ((i + 1) % batchSize == 0)
                 {
                     //Thread.Sleep();
-                    network.GradientDescend(learningCoefficient);
-                    Console.WriteLine(network.GetCost());
-                    Console.WriteLine(i);
-                    var (_, top) = Console.GetCursorPosition();
-                    Console.SetCursorPosition(0, top - 2);
+                    network.GradientDescend(coef);
+                    if ((i + 1) % (batchSize * 100) == 0)
+                    {
+                        Console.WriteLine(network.GetCost());
+                        Console.WriteLine(i);
+                        var (_, top) = Console.GetCursorPosition();
+                        Console.SetCursorPosition(0, top - 2);
+                    }
                     network.ResetCost();
                 }
             }
@@ -31,7 +39,7 @@ namespace PerceptronPP.Core
                 catch { }
         }
 
-        public static void Test(Network network, double[][] testData, double[][] expectedOutputs)
+        public static void Test(Network network, double[][] testData, int[] expectedOutputs)
         {
             Console.Clear();
             int count = 0;
@@ -52,21 +60,21 @@ namespace PerceptronPP.Core
 
         }
 
-        private static bool Check(double[] output, double[] expectedOutput)
+        private static bool Check(double[] output, int expectedOutput)
         {
-            var label = expectedOutput.Select((e,i)=>Tuple.Create(e,i)).Where(tuple => tuple.Item1 == 1).First().Item2;
+            var label = expectedOutput;
             var outputLabel = output.Select((e, i) => Tuple.Create(e, i)).OrderByDescending(tuple => tuple.Item1).First().Item2;
             if (label == outputLabel) return true;
             return false;
         }
 
-        public static double[] Iterate(Network network, double[] input, double[] expectedOutput)
+        public static double[] Iterate(Network network, double[] input, int expectedOutput)
         {
             var output = network.Compute(input);
             //Console.WriteLine(String.Join(" ,",output));
             //Console.WriteLine(String.Join(" ,", expectedOutput));
-            network.BackPropagate(output,expectedOutput);
-            network.CalculateCost(output, expectedOutput);
+            network.BackPropagate(output,Learning.IntToExpectedOutputArray(expectedOutput));
+            network.CalculateCost(output, Learning.IntToExpectedOutputArray(expectedOutput));
             
             return output;
         }

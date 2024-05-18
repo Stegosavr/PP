@@ -1,4 +1,3 @@
-using MathNet.Numerics.LinearAlgebra;
 using PerceptronPP.Core.Tools.Biases;
 using PerceptronPP.Core.Tools.Computable;
 using PerceptronPP.Core.Tools.Weights.Factory;
@@ -37,7 +36,7 @@ public class Network
 
 	public Network SetWeights(IWeightsFactory provider)
 	{
-		for (var i = 0; i < _layers.Length - 1; i++)
+		for (var i = 0; i < _layers.Length-1; i++)
 			_layers[i].SetWeights(provider.Create(i));
 
 		return this;
@@ -45,10 +44,10 @@ public class Network
 
 	public Network SetBiases(IBiasProvidable biasProvidable)
 	{
-		for (var i = 0; i < _layers.Length - 1; i++)
+		for (var i = 0; i < _layers.Length-1; i++)
 		{
 			_layers[i].SetBiases(Enumerable
-				.Range(0, _neuronCounts[i + 1])
+				.Range(0, _neuronCounts[i+1])
 				.Select(n => biasProvidable.GetBias(i, n))
 				.ToArray()
 			);
@@ -59,7 +58,11 @@ public class Network
 
 	public double[] Compute(params double[] input)
 	{
-		var matrix = ComputeMatrix(input);
+		var matrix = _layers.SkipLast(1).Aggregate
+		(
+			Layer.MatrixArray(input),
+			(current, layer) => layer.ComputeOutput(_activationComputable, current)
+		);
 		//matrix = _layers.SkipLast(1).Last().ComputeLastOutput(matrix);//////
 
 		var result = new double[matrix.ColumnCount];
@@ -71,35 +74,26 @@ public class Network
 		return result;
 	}
 
-	public Matrix<double> ComputeMatrix(double[] input)
-	{
-		return _layers.SkipLast(1).Aggregate
-		(
-			Layer.MatrixArray(input),
-			(current, layer) => layer.ComputeOutput(_activationComputable, current)
-		);
-	}
-
 	public void CalculateCost(double[] output, double[] expectedOutput)
 	{
-		for (var i = 0; i < output.Length; i++)
-		{
-			_cost += Math.Pow(output[i] - expectedOutput[i], 2);
-		}
+		for (int i =0; i < output.Length; i++)
+        {
+			_cost += Math.Pow(output[i]-expectedOutput[i],2);
+        }
 	}
 
 	public double GetCost()
-	{
+    {
 		return _cost;
-	}
+    }
 
 	public void ResetCost()
-	{
+    {
 		_cost = 0;
-	}
+    }
 
-	public void BackPropagate(double[] networkOutput, double[] expectedNetworkOutput)
-	{
+	public void BackPropagate(double[] networkOutput,double[] expectedNetworkOutput)
+    {
 		var output = 2 * (Layer.MatrixArray(networkOutput) - Layer.MatrixArray(expectedNetworkOutput));
 		_layers.Reverse().Skip(1).Aggregate
 		(
@@ -111,18 +105,12 @@ public class Network
 	}
 
 	public void GradientDescend(double coefficient)
-	{
+    {
 		if (_iterations == 0) throw new InvalidOperationException("Back propagation needs to be called first");
 
 		foreach (var layer in _layers.SkipLast(1))
 			layer.GradientDescend(coefficient, _iterations);
 
 		_iterations = 0;
-	}
-
-	public Layer GetLayer(int layer)
-	{
-		if (layer < 0 || layer >= _layers.Length) throw new Exception("Incorrect layer number");
-		return _layers[layer];
 	}
 }
