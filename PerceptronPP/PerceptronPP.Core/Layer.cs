@@ -2,6 +2,8 @@
 using MathNet.Numerics.LinearAlgebra.Double;
 using PerceptronPP.Core.Exceptions;
 using PerceptronPP.Core.Tools.Computable;
+using PerceptronPP.Core.Tools.GradientDescent;
+using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 using PerceptronPP.Core.Tools.Weights;
 using PerceptronPP.Core.Tools.Weights.Provider;
 
@@ -10,8 +12,8 @@ namespace PerceptronPP.Core;
 public class Layer
 {
 	private readonly int _neuronsCount;
-	private Matrix<double> _weights;//deReadonlyized
-	private Matrix<double> _biases;//deReadonlyized
+	private Matrix<double> _weights;
+	private Matrix<double> _biases;
 
 	private Matrix<double> _input;
 	private readonly BackPropagationData _backPropData;
@@ -105,10 +107,13 @@ public class Layer
 		return activationsDer;
 	}
 
-	public void GradientDescent(double coefficient, int iterations)
+	public void GradientDescent(IOptimizer optimizer, double coefficient, int iterations, int layerIndex)
     {
-		_weights -= _backPropData.WeightsDerivative / iterations * coefficient;
-		_biases -= _backPropData.BiasesDerivative / iterations  * coefficient;
+		optimizer.GradientDescent(ParameterType.Weight, ref _weights, _backPropData.WeightsDerivative, coefficient / iterations, layerIndex);
+		optimizer.GradientDescent(ParameterType.Bias, ref _biases, _backPropData.BiasesDerivative, coefficient / iterations, layerIndex);
+
+		//_weights -= _backPropData.WeightsDerivative / iterations * coefficient;
+		//_biases -= _backPropData.BiasesDerivative / iterations  * coefficient;
 
 		_backPropData.Clear();
 	}

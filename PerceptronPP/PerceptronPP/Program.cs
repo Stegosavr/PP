@@ -4,6 +4,7 @@ using PerceptronPP.Core.Tools.Computable;
 using PerceptronPP.Core.Tools.Weights.Factory;
 
 using Accord.IO;
+using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 
 namespace PerceptronPP;
 
@@ -20,7 +21,7 @@ internal static class Program
         var output = network.Compute(new[] { 1, 1, 1d });
         network.CalculateCost(output, new[] { 1, 1, 1d });
         network.BackPropagate(output, new[] { 1, 1, 1d });
-        network.GradientDescent(0.05);
+        network.GradientDescent(new StochasticGradientDescent(),0.05);
     }
 
     public static void Main()
@@ -65,7 +66,7 @@ internal static class Program
 
         int n;
 
-        Learning.Learn(network, 4, 20, images, labels);
+        Learning.Learn(network, new MomentumSGD(0.9,network._neuronCounts.Length), 4, 2, images, labels);
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray() }, new[] { 0 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray(), (Dict[1].Take(5000)).ToArray() }, new[] { 0,1 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(5000).ToArray(), (Dict[1].Take(5000)).ToArray(), (Dict[2].Take(5000)).ToArray() }, new[] { 0,1,2 });
@@ -134,7 +135,7 @@ internal static class Program
             if ((i + 1) % 5 == 0)
             {
                 //Thread.Sleep();
-                network.GradientDescent(4);
+                network.GradientDescent(new StochasticGradientDescent(),4);
                 Console.WriteLine(network.GetCost());
                 Console.WriteLine(trainData.Length);
                 var (_, top) = Console.GetCursorPosition();

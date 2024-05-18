@@ -1,6 +1,7 @@
 using MathNet.Numerics.LinearAlgebra;
 using PerceptronPP.Core.Tools.Biases;
 using PerceptronPP.Core.Tools.Computable;
+using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 using PerceptronPP.Core.Tools.Weights.Factory;
 
 namespace PerceptronPP.Core;
@@ -9,7 +10,7 @@ public class Network
 {
 	private readonly Layer[] _layers;
 	private readonly IComputable _activationComputable;
-	private readonly int[] _neuronCounts;
+	public readonly int[] _neuronCounts;
 
 	private int _iterations;
 	private double _cost;
@@ -110,12 +111,15 @@ public class Network
 		_iterations++;
 	}
 
-	public void GradientDescent(double coefficient)
+	public void GradientDescent(IOptimizer optimizer, double coefficient)
     {
 		if (_iterations == 0) throw new InvalidOperationException("Back propagation needs to be called first");
 
-		foreach (var layer in _layers.SkipLast(1))
-			layer.GradientDescent(coefficient, _iterations);
+		for (int i = 0; i < _layers.Length - 1; i++)
+			_layers[i].GradientDescent(optimizer, coefficient, _iterations, i);
+
+		//foreach (var layer in _layers.SkipLast(1))
+		//	layer.GradientDescent(_optimizer, coefficient, _iterations);
 
 		_iterations = 0;
 	}
