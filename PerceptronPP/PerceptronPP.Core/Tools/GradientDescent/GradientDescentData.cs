@@ -16,9 +16,9 @@ public class GradientDescentData
     public void SetPreviousVelocity(ParameterType type, Matrix<double> value)
     {
         if (type is ParameterType.Weight)
-            PreviousWeightsVelocity = value;
+            PreviousWeightsVelocity = value.Clone();
         if (type == ParameterType.Bias)
-            PreviousBiasesVelocity = value;
+            PreviousBiasesVelocity = value.Clone();
     }
 
     public Matrix<double> GetPreviousVelocity(ParameterType type)

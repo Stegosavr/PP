@@ -8,13 +8,13 @@ using PerceptronPP.Core.Tools.GradientDescent;
 
 namespace PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 
-public class MomentumSGD : IOptimizer
+public class RMSPropagation : IOptimizer
 {
     public string Name { get; } = nameof(StochasticGradientDescent);
     private List<GradientDescentData> _gradientDescentData;
     private readonly double _beta;
 
-    public MomentumSGD(double beta,int layersCount)
+    public RMSPropagation(double beta,int layersCount)
     {
         //_gradientDescentData = Enumerable.Repeat(new GradientDescentData(), layersCount-1).ToList();
         _gradientDescentData = new List<GradientDescentData>();
@@ -26,17 +26,19 @@ public class MomentumSGD : IOptimizer
     public void GradientDescent(ParameterType type, ref Matrix<double> currentParameters, 
         Matrix<double> parametersDerivative, double coefficient, int layerIndex)
     {
+        Matrix<double> velocity;
         if (_gradientDescentData[layerIndex].GetPreviousVelocity(type) == null)
         {
-            _gradientDescentData[layerIndex].SetPreviousVelocity(type, parametersDerivative);
-            currentParameters -= parametersDerivative * coefficient;
+            velocity = (1 - _beta) * parametersDerivative.PointwisePower(2);
+            _gradientDescentData[layerIndex].SetPreviousVelocity(type, velocity);
         }
         else
         {
-            var velocity = _gradientDescentData[layerIndex].GetPreviousVelocity(type)
-                * _beta + (1 - _beta) * parametersDerivative;
+            velocity = _gradientDescentData[layerIndex].GetPreviousVelocity(type)
+                * _beta + (1 - _beta) * parametersDerivative.PointwisePower(2);
             _gradientDescentData[layerIndex].SetPreviousVelocity(type, velocity);
-            currentParameters -= velocity * coefficient;
         }
+        currentParameters -= coefficient * parametersDerivative.PointwiseDivide((velocity.PointwiseSqrt()) + (1e-9) );
+        
     }
 }
