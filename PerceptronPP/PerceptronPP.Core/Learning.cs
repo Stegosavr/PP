@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 
 namespace PerceptronPP.Core
 {
     public class Learning
     {
-        public static void Learn(Network network, int batchSize, double learningCoefficient, double[][] trainData, int[] expectedOutputs)
+        public static void Learn(Network network, IOptimizer optimizer, int batchSize, double learningCoefficient, double[][] trainData, int[] expectedOutputs)
         {
             //Console.
             var coef = learningCoefficient;
@@ -23,7 +24,7 @@ namespace PerceptronPP.Core
                 if ((i + 1) % batchSize == 0)
                 {
                     //Thread.Sleep();
-                    network.GradientDescent(coef);
+                    network.GradientDescent(optimizer,coef);
                     if ((i + 1) % (batchSize * 100) == 0)
                     {
                         Console.WriteLine(network.GetCost());
@@ -35,7 +36,7 @@ namespace PerceptronPP.Core
                 }
             }
             if (trainData.Length % batchSize == 0)
-                try { network.GradientDescent(learningCoefficient); }
+                try { network.GradientDescent(optimizer,learningCoefficient); }
                 catch { }
         }
 
