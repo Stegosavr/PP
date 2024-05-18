@@ -17,11 +17,16 @@ internal static class Program
             //.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
             .SetWeights(new ConstantWeightFactory(new[] { new[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1d } } }))
             .SetBiases(new BiasConstantProvider(0));
-
+        var optimazer = new RMSPropagation(0.9, network._neuronCounts.Length);
         var output = network.Compute(new[] { 1, 1, 1d });
         network.CalculateCost(output, new[] { 1, 1, 1d });
         network.BackPropagate(output, new[] { 1, 1, 1d });
-        network.GradientDescent(new StochasticGradientDescent(),0.05);
+        network.GradientDescent(optimazer, 0.05);
+        network.ResetCost();
+        network.BackPropagate(output, new[] { 1, 1, 1d });
+        network.CalculateCost(output, new[] { 1, 1, 1d });
+        network.GradientDescent(optimazer, 0.05);
+
     }
 
     public static void Main()
@@ -66,7 +71,7 @@ internal static class Program
 
         int n;
 
-        Learning.Learn(network, new MomentumSGD(0.9,network._neuronCounts.Length), 4, 2, images, labels);
+        Learning.Learn(network, new RMSPropagation(0.9,network._neuronCounts.Length), 3, 0.05, images, labels);
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray() }, new[] { 0 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray(), (Dict[1].Take(5000)).ToArray() }, new[] { 0,1 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(5000).ToArray(), (Dict[1].Take(5000)).ToArray(), (Dict[2].Take(5000)).ToArray() }, new[] { 0,1,2 });
