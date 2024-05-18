@@ -20,7 +20,7 @@ internal static class Program
         var output = network.Compute(new[] { 1, 1, 1d });
         network.CalculateCost(output, new[] { 1, 1, 1d });
         network.BackPropagate(output, new[] { 1, 1, 1d });
-        network.GradientDescend(0.05);
+        network.GradientDescent(0.05);
     }
 
     public static void Main()
@@ -134,7 +134,7 @@ internal static class Program
             if ((i + 1) % 5 == 0)
             {
                 //Thread.Sleep();
-                network.GradientDescend(4);
+                network.GradientDescent(4);
                 Console.WriteLine(network.GetCost());
                 Console.WriteLine(trainData.Length);
                 var (_, top) = Console.GetCursorPosition();

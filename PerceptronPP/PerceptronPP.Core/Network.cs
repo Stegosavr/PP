@@ -104,12 +104,12 @@ public class Network
 		_iterations++;
 	}
 
-	public void GradientDescend(double coefficient)
+	public void GradientDescent(double coefficient)
     {
 		if (_iterations == 0) throw new InvalidOperationException("Back propagation needs to be called first");
 
 		foreach (var layer in _layers.SkipLast(1))
-			layer.GradientDescend(coefficient, _iterations);
+			layer.GradientDescent(coefficient, _iterations);
 
 		_iterations = 0;
 	}
