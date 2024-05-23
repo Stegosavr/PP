@@ -5,6 +5,8 @@ using PerceptronPP.Core.Tools.Weights.Factory;
 
 using Accord.IO;
 using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace PerceptronPP;
 
@@ -12,21 +14,20 @@ internal static class Program
 {
     private static void Main2()
     {
-        var network = new Network(new AtanComputable(), 3, 3);//3,4,3
+        var network = new Network(new AtanComputable(), 1, 3);//3,4,3
         network
             //.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
-            .SetWeights(new ConstantWeightFactory(new[] { new[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1d } } }))
+            .SetWeights(new ConstantWeightFactory(new[] { new[,] { { 1.43, -0.4, 0.23 } } }))
             .SetBiases(new BiasConstantProvider(0));
         var optimazer = new RMSPropagation(0.9, network._neuronCounts.Length);
-        var output = network.Compute(new[] { 1, 1, 1d });
+        var output = network.Compute(new[] { 1d});
         network.CalculateCost(output, new[] { 1, 1, 1d });
         network.BackPropagate(output, new[] { 1, 1, 1d });
-        network.GradientDescent(optimazer, 0.05);
-        network.ResetCost();
-        network.BackPropagate(output, new[] { 1, 1, 1d });
-        network.CalculateCost(output, new[] { 1, 1, 1d });
         network.GradientDescent(optimazer, 0.05);
 
+        var input = DenseMatrix.OfArray(new double[,] { { 0.3394572666491664, 0.3089068053925853, 0.3516359279582483 }, { 0.33932706934615525, 0.3094755563319447, 0.3511973743219001 }, { 0.3394407172182317, 0.30889042266755573, 0.35166886011421256 }, { 0.3394407172182317, 0.30889042266755573, 0.35166886011421256 } });
+        var input2 = SoftmaxComputable.Compute(input);
+        var output2 = SoftmaxComputable.ComputeDerivative(input2);
     }
 
     public static void Main()
@@ -34,7 +35,7 @@ internal static class Program
         //Main2();
         //return;
 
-        var network = new Network(new AtanComputable(), 784, 30, 30,10);//3,4,3
+        var network = new Network(new SigmoidComputable(), 784, 16,16,10);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
 			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount,WeightsProviderType.GaussianRandom,1))
@@ -71,7 +72,7 @@ internal static class Program
 
         int n;
 
-        Learning.Learn(network, new RMSPropagation(0.9,network._neuronCounts.Length), 3, 0.05, images, labels);
+        Learning.Learn(network, new RMSPropagation(0.9,network._neuronCounts.Length), 4, 0.1, images, labels);
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray() }, new[] { 0 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray(), (Dict[1].Take(5000)).ToArray() }, new[] { 0,1 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(5000).ToArray(), (Dict[1].Take(5000)).ToArray(), (Dict[2].Take(5000)).ToArray() }, new[] { 0,1,2 });

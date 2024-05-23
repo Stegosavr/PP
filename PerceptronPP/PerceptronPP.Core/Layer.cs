@@ -65,10 +65,8 @@ public class Layer
 		if (input.ColumnCount != _neuronsCount) throw new IncorrectNeuronCountException();
 		var output = input * _weights + _biases;
 
-		
 		output = SoftmaxComputable.Compute(output);
 		_backPropData.NeuronsInputSignalDerivative = SoftmaxComputable.ComputeDerivative(output);
-
 
 		//input.CopyTo(_input);
 		_input = input;
@@ -94,7 +92,14 @@ public class Layer
 			for (var j = 0; j < _weights.ColumnCount; j++)
 				weightsDer[i, j] += outputByinputDer[0, j] * _input[0, i];
         }
-		for (var j = 0; j < _biases.ColumnCount; j++)
+        //L2 Regularization der
+        for (var i = 0; i < _weights.RowCount; i++)
+        {
+            for (var j = 0; j < _weights.ColumnCount; j++)
+                weightsDer[i, j] += 0.01 * _weights[i, j];
+        }
+        //
+        for (var j = 0; j < _biases.ColumnCount; j++)
         {
 			biasesDer[0, j] += outputByinputDer[0, j];
 		}
@@ -118,6 +123,16 @@ public class Layer
 
 		_backPropData.Clear();
 	}
+
+	public double GetWeightsCost()
+    {
+		double cost = 0.0;
+		foreach (var e in _weights.PointwisePower(2).ToArray())
+        {
+			cost += e;
+        }
+		return cost;
+    }
 
 	public static Matrix<double> MatrixArray(double[] input)
 	{

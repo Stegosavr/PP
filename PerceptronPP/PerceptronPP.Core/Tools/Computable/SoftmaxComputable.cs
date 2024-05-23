@@ -28,7 +28,7 @@ public class SoftmaxComputable //: IComputable //Only for last (output) layer
 				if (j != index)
 					result[0, index] += -derMatrix[0,j] * derMatrix[0,index];
 				else
-					result[0, index] += derMatrix[0,index] * (1 - derMatrix[0,index]);
+					result[0, j] += derMatrix[0,j] * (1 - derMatrix[0,j]);
 			}
 		return result;
 	}

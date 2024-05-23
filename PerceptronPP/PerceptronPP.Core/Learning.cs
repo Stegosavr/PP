@@ -13,14 +13,14 @@ namespace PerceptronPP.Core
         {
             //Console.
             var coef = learningCoefficient;
-            //var delta = (learningCoefficient - 0.01) / trainData.Length;
+            var delta = (learningCoefficient - 0.01) / trainData.Length;
             double[] output;
             for (int i = 0; i < trainData.Length; i++)
             {
                 Iterate(network, trainData[i],  expectedOutputs[i]);
-                //coef -= delta;
-                //if ((i + 1) % 15000 == 0 && batchSize != 1)
-                //    batchSize-=1;
+                coef -= delta;
+                if ((i + 1) % 15000 == 0 && batchSize != 1)
+                    batchSize-=1;
                 if ((i + 1) % batchSize == 0)
                 {
                     //Thread.Sleep();
@@ -58,6 +58,8 @@ namespace PerceptronPP.Core
                 var (_, top) = Console.GetCursorPosition();
                 Console.SetCursorPosition(0, top - 2);
             }
+            Console.SetCursorPosition(0, 4);
+
 
         }
 

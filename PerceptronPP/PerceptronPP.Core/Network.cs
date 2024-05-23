@@ -81,6 +81,14 @@ public class Network
         {
 			_cost += Math.Pow(output[i]-expectedOutput[i],2);
         }
+
+		//L2 Regularization cost
+		var weightsCost = 0.0;
+		for (int i = 0; i < _layers.Length-1; i++)
+        {
+			weightsCost += _layers[i].GetWeightsCost();
+        }
+		_cost += weightsCost * 0.01 / 2;
 	}
 
 	public double GetCost()
