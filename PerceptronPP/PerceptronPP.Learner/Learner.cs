@@ -2,6 +2,7 @@ using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Single;
 using PerceptronPP.Core;
 using PerceptronPP.Core.Tools.Computable;
+using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 
 namespace PerceptronPP.Learner;
 
@@ -38,14 +39,14 @@ public class Learner
 			CalculateCost(network, output, expectedOutput);
 			if ((i + 1) % batchSize != 0) continue;
 
-			network.GradientDescent(learningCoefficient);
+			network.GradientDescent(new RMSPropagation(0.9, network._neuronCounts.Length), learningCoefficient);
 			lastCost = network.GetCost() / batchSize;
 			WriteStepData(lastCost, i);
 			network.ResetCost();
 		}
 
 		if ((i) % batchSize == 0) return new[] { lastCost, i };
-		network.GradientDescent(learningCoefficient);
+		network.GradientDescent(new RMSPropagation(0.9, network._neuronCounts.Length), learningCoefficient);
 		var correctedLastCost = network.GetCost() / (i % batchSize);
 		WriteStepData(correctedLastCost, i);
 		return new[] { correctedLastCost, i };

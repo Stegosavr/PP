@@ -5,10 +5,14 @@
       "Accord/3.8.2-alpha": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Accord.dll": {}
+          "lib/netstandard2.0/Accord.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Accord.dll": {}
+          "lib/netstandard2.0/Accord.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "build/Accord.targets": {}
@@ -21,19 +25,27 @@
           "SharpZipLib": "0.86.0"
         },
         "compile": {
-          "lib/netstandard2.0/Accord.IO.dll": {}
+          "lib/netstandard2.0/Accord.IO.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Accord.IO.dll": {}
+          "lib/netstandard2.0/Accord.IO.dll": {
+            "related": ".xml"
+          }
         }
       },
       "MathNet.Numerics/5.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/MathNet.Numerics.dll": {}
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/MathNet.Numerics.dll": {}
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SharpZipLib/0.86.0": {
@@ -179,35 +191,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ilya1\\.nuget\\packages\\": {}
+    "/home/philainel/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj",
+      "projectUniqueName": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Learner/PerceptronPP.Learner.csproj",
       "projectName": "PerceptronPP.Learner",
-      "projectPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj",
-      "packagesPath": "C:\\Users\\ilya1\\.nuget\\packages\\",
-      "outputPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\obj\\",
+      "projectPath": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Learner/PerceptronPP.Learner.csproj",
+      "packagesPath": "/home/philainel/.nuget/packages/",
+      "outputPath": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Learner/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ilya1\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/philainel/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "D:\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj": {
-              "projectPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj"
+            "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Core/PerceptronPP.Core.csproj": {
+              "projectPath": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Core/PerceptronPP.Core.csproj"
             }
           }
         }
@@ -233,16 +242,31 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.29, 6.0.29]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[6.0.29, 6.0.29]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.29, 6.0.29]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.104/RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -251,7 +275,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Пакет \"SharpZipLib 0.86.0\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \"net6.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "message": "Package 'SharpZipLib 0.86.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
       "libraryId": "SharpZipLib",
       "targetGraphs": [
         "net6.0"
