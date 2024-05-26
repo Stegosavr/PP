@@ -1,3 +1,4 @@
+using System.Collections;
 using MathNet.Numerics.LinearAlgebra;
 using PerceptronPP.Core.Tools.Biases;
 using PerceptronPP.Core.Tools.Computable;
@@ -6,7 +7,7 @@ using PerceptronPP.Core.Tools.Weights.Factory;
 
 namespace PerceptronPP.Core;
 
-public class Network
+public class Network : IEnumerable<Layer>
 {
 	private readonly Layer[] _layers;
 	private readonly IComputable _activationComputable;
@@ -38,7 +39,7 @@ public class Network
 
 	public Network SetWeights(IWeightsFactory provider)
 	{
-		for (var i = 0; i < _layers.Length-1; i++)
+		for (var i = 0; i < _layers.Length - 1; i++)
 			_layers[i].SetWeights(provider.Create(i));
 
 		return this;
@@ -46,10 +47,10 @@ public class Network
 
 	public Network SetBiases(IBiasProvidable biasProvidable)
 	{
-		for (var i = 0; i < _layers.Length-1; i++)
+		for (var i = 0; i < _layers.Length - 1; i++)
 		{
 			_layers[i].SetBiases(Enumerable
-				.Range(0, _neuronCounts[i+1])
+				.Range(0, _neuronCounts[i + 1])
 				.Select(n => biasProvidable.GetBias(i, n))
 				.ToArray()
 			);
@@ -83,24 +84,24 @@ public class Network
 
 	public void CalculateCost(double[] output, double[] expectedOutput)
 	{
-		for (var i =0; i < output.Length; i++)
-        {
-			_cost += Math.Pow(output[i]-expectedOutput[i],2);
-        }
+		for (var i = 0; i < output.Length; i++)
+		{
+			_cost += Math.Pow(output[i] - expectedOutput[i], 2);
+		}
 	}
 
 	public double GetCost()
-    {
+	{
 		return _cost;
-    }
+	}
 
 	public void ResetCost()
-    {
+	{
 		_cost = 0;
-    }
+	}
 
-	public void BackPropagate(double[] networkOutput,double[] expectedNetworkOutput)
-    {
+	public void BackPropagate(double[] networkOutput, double[] expectedNetworkOutput)
+	{
 		var output = 2 * (Layer.MatrixArray(networkOutput) - Layer.MatrixArray(expectedNetworkOutput));
 		_layers.Reverse().Skip(1).Aggregate
 		(
@@ -112,7 +113,7 @@ public class Network
 	}
 
 	public void GradientDescent(IOptimizer optimizer, double coefficient)
-    {
+	{
 		if (_iterations == 0) throw new InvalidOperationException("Back propagation needs to be called first");
 
 		for (int i = 0; i < _layers.Length - 1; i++)
@@ -128,4 +129,21 @@ public class Network
 	{
 		return _layers[layer];
 	}
+
+	public int GetLayerCount()
+	{
+		return _layers.Length;
+	}
+
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return GetEnumerator();
+	}
+
+	public IEnumerator<Layer> GetEnumerator()
+	{
+		return ((IEnumerable<Layer>)_layers).GetEnumerator();
+	}
+
+	public Layer this[int layer] => GetLayer(layer);
 }

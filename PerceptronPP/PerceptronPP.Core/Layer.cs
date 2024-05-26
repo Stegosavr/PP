@@ -18,6 +18,21 @@ public class Layer
 	private Matrix<double> _input;
 	private readonly BackPropagationData _backPropData;
 
+	public int GetNeuronsCount()
+	{
+		return _neuronsCount;
+	}
+	
+	public Matrix<double> GetBiases()
+	{
+		return _biases;
+	}
+
+	public Matrix<double> GetWeights()
+	{
+		return _weights;
+	}
+	
 	public Layer(int neurons, int nextNeurons = 0)
 	{
 		_neuronsCount = neurons;
