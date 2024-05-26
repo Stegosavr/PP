@@ -13,7 +13,7 @@ public static class WeightsOperator
 		var lines = File.ReadLines(Path.Combine("..", "..", "..", path), Encoding.UTF8);
 		using var linesEnumerator = lines.GetEnumerator();
 		if (!linesEnumerator.MoveNext()) throw new Exception("Empty file");
-		var networkInfo = linesEnumerator.Current.Split(", ").Select(x => int.Parse(x)).ToArray();
+		var networkInfo = linesEnumerator.Current.Split(",").Select(x => int.Parse(x)).ToArray();
 		if (networkInfo.Length == 0) throw new Exception("Wtf");
 
 		var weights = new double[networkInfo.Length][,];
