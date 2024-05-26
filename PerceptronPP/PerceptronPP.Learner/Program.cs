@@ -20,7 +20,7 @@ internal static class Program
 		var network = new Network(Computable, NeuronCounts); //3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
-			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
+			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount, WeightsProviderType.Random, 1))
 			.SetBiases(new BiasConstantProvider(0));
 
 		using var imagesData = new IdxReader(@"../../../../Datasets/MNIST/train-images.idx3-ubyte");

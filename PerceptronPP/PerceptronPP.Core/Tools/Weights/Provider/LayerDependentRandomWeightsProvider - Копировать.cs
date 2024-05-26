@@ -1,12 +1,12 @@
 namespace PerceptronPP.Core.Tools.Weights.Provider;
 
-public class RandomWeightsProvider : IWeightsProvider
+public class LayerDependentWeightsProvider : IWeightsProvider
 {
 	private readonly double _distribution;
 
-	public RandomWeightsProvider(int layer, double distribution)
+	public LayerDependentWeightsProvider(int layer, double distribution)
 	{
-		_distribution = distribution;
+		_distribution = (1 / Math.Sqrt(layer)) * distribution;
 	}
 	
 	public double GetWeight(int _, int __)
