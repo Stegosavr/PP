@@ -2,6 +2,7 @@
 using PerceptronPP.Core.Tools.Biases;
 using PerceptronPP.Core.Tools.Computable;
 using PerceptronPP.Core.Tools.Weights.Factory;
+using PerceptronPP.Core.FileManager.Excel;
 
 using Accord.IO;
 using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
@@ -32,13 +33,18 @@ internal static class Program
 
     public static void Main()
     {
+        ExcelWriter.SaveXLSX(@"..\..\..\..\LearningResults\EXCEL.xlsx", new ExcelLearningData[]
+        {
+            new ExcelLearningData{Optimizer = "SDSD",Time = "10"},
+            new ExcelLearningData{Optimizer = "SDSD",Time = "10",BatchSize ="10",LearningCoefficient="6"}
+        });
         //Main2();
         //return;
 
-        var network = new Network(new SigmoidComputable(), 784, 16,16,10);//3,4,3
+        var network = new Network(new SigmoidComputable(), 784, 30,30,10);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
-			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount,WeightsProviderType.GaussianRandom,1))
+			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount,WeightsProviderType.Random,0.5))
 			.SetBiases(new BiasConstantProvider(0));
 
         IEnumerable<double[]> GetSample(IdxReader reader)
@@ -72,7 +78,7 @@ internal static class Program
 
         int n;
 
-        Learning.Learn(network, new RMSPropagation(0.9,network._neuronCounts.Length), 4, 0.1, images, labels);
+        Learning.Learn(network, new RMSPropagation(0.9,network._neuronCounts.Length), 4, 0.1, images.Take(600).ToArray(), labels.Take(600).ToArray());
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray() }, new[] { 0 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray(), (Dict[1].Take(5000)).ToArray() }, new[] { 0,1 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(5000).ToArray(), (Dict[1].Take(5000)).ToArray(), (Dict[2].Take(5000)).ToArray() }, new[] { 0,1,2 });

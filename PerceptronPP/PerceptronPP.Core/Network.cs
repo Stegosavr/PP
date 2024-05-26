@@ -25,6 +25,17 @@ public class Network
 			.ToArray();
 	}
 
+	public Network(Network network)
+    {
+		_activationComputable = network._activationComputable;
+		_neuronCounts = network._neuronCounts;
+		_layers = network._layers
+			.Select(layer=>layer.Clone())
+			.ToArray();
+    }
+
+	public Network Clone() => new Network(this);
+
 	public int GetNeuronCount(int layer)
 	{
 		return _neuronCounts[layer];
@@ -65,6 +76,7 @@ public class Network
 			(current, layer) => layer.ComputeOutput(_activationComputable, current)
 		);
 		//matrix = _layers.SkipLast(1).Last().ComputeLastOutput(matrix);//////
+		//matrix = _layers.SkipLast(1).Last().ComputeOutput(_activationComputable,matrix,false,false);//////
 
 		var result = new double[matrix.ColumnCount];
 		for (var i = 0; i < matrix.ColumnCount; i++)
@@ -82,12 +94,22 @@ public class Network
 			_cost += Math.Pow(output[i]-expectedOutput[i],2);
         }
 
-		//L2 Regularization cost
+        //L2 Regularization cost
+        //var weightsCost = 0.0;
+        //for (int i = 0; i < _layers.Length - 1; i++)
+        //{
+        //    weightsCost += _layers[i].GetWeightsCost();
+        //}
+        //_cost += weightsCost * 0.0000001 / 2;
+    }
+
+	public void CalculateWeightsCost()
+    {
 		var weightsCost = 0.0;
-		for (int i = 0; i < _layers.Length-1; i++)
-        {
+		for (int i = 0; i < _layers.Length - 1; i++)
+		{
 			weightsCost += _layers[i].GetWeightsCost();
-        }
+		}
 		_cost += weightsCost * 0.01 / 2;
 	}
 

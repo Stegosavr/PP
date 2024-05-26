@@ -1,6 +1,7 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using PerceptronPP.Core.Exceptions;
+using PerceptronPP.Core.Tools;
 using PerceptronPP.Core.Tools.Computable;
 using PerceptronPP.Core.Tools.GradientDescent;
 using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
@@ -16,6 +17,7 @@ public class Layer
 	private Matrix<double> _biases;
 
 	private Matrix<double> _input;
+
 	private readonly BackPropagationData _backPropData;
 
 	public Layer(int neurons, int nextNeurons = 0)
@@ -27,6 +29,18 @@ public class Layer
 		_input = CreateMatrix.Dense<double>(1, _neuronsCount);
 		_backPropData = new BackPropagationData(neurons,nextNeurons);
 	}
+
+	public Layer(Layer layer)
+    {
+		_neuronsCount = layer._neuronsCount;
+		_weights = layer._weights.Clone();
+		_biases = layer._biases.Clone();
+
+		_input = CreateMatrix.Dense<double>(1, _neuronsCount);
+		_backPropData = new BackPropagationData(_neuronsCount, _weights.ColumnCount);
+	}
+
+	public Layer Clone() => new Layer(this);
 
 	public void SetWeights(IWeightsProvider weights)
 	{
@@ -42,8 +56,9 @@ public class Layer
 		for (var i = 0; i < _biases.ColumnCount; i++)
 			_biases[0, i] = biases[i];
 	}
-	
-	public Matrix<double> ComputeOutput(IComputable computable, Matrix<double> input)
+
+	public Matrix<double> ComputeOutput(IComputable computable, Matrix<double> input,
+		DropoutData dropoutData = null)
 	{
 		if (input.ColumnCount != _neuronsCount) throw new IncorrectNeuronCountException();
 		var output = input * _weights + _biases;
@@ -54,7 +69,9 @@ public class Layer
 			output[0, i] = computable.Compute(output[0, i]);
 		}
 
-		//input.CopyTo(_input);
+		if (dropoutData != null)
+			Dropout.DropActivations(output, dropoutData);
+
 		_input = input;
 
 		return output;
@@ -92,13 +109,15 @@ public class Layer
 			for (var j = 0; j < _weights.ColumnCount; j++)
 				weightsDer[i, j] += outputByinputDer[0, j] * _input[0, i];
         }
+
         //L2 Regularization der
-        for (var i = 0; i < _weights.RowCount; i++)
-        {
-            for (var j = 0; j < _weights.ColumnCount; j++)
-                weightsDer[i, j] += 0.01 * _weights[i, j];
-        }
+        //for (var i = 0; i < _weights.RowCount; i++)
+        //{
+        //    for (var j = 0; j < _weights.ColumnCount; j++)
+        //        weightsDer[i, j] += 0.33 / 60000 * _weights[i, j];
+        //}
         //
+
         for (var j = 0; j < _biases.ColumnCount; j++)
         {
 			biasesDer[0, j] += outputByinputDer[0, j];
@@ -115,13 +134,17 @@ public class Layer
 
 	public void GradientDescent(IOptimizer optimizer, double coefficient, int iterations, int layerIndex)
     {
-		optimizer.GradientDescent(ParameterType.Weight, ref _weights, _backPropData.WeightsDerivative, coefficient / iterations, layerIndex);
+        //var weights = _weights.Clone();
+
+        optimizer.GradientDescent(ParameterType.Weight, ref _weights, _backPropData.WeightsDerivative, coefficient / iterations, layerIndex);
 		optimizer.GradientDescent(ParameterType.Bias, ref _biases, _backPropData.BiasesDerivative, coefficient / iterations, layerIndex);
 
-		//_weights -= _backPropData.WeightsDerivative / iterations * coefficient;
-		//_biases -= _backPropData.BiasesDerivative / iterations  * coefficient;
+        //_weights -= weights * 0.33 / 60000 * coefficient / iterations;
 
-		_backPropData.Clear();
+        //_weights -= _backPropData.WeightsDerivative / iterations * coefficient;
+        //_biases -= _backPropData.BiasesDerivative / iterations * coefficient;
+
+        _backPropData.Clear();
 	}
 
 	public double GetWeightsCost()
