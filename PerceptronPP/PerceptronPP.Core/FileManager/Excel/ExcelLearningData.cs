@@ -8,8 +8,9 @@ namespace PerceptronPP.Core.FileManager.Excel;
 
 public class ExcelLearningData
 {
-    public string Optimizer;
     public string HiddenLayers;
+    public string ActivationFunction;
+    public string Optimizer;
 
     public string BatchSize;
     public string BatchSize2;

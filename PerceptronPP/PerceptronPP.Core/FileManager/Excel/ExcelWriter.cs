@@ -22,8 +22,6 @@ public static class ExcelWriter
     {
         // If you use EPPlus in a noncommercial context
         // according to the Polyform Noncommercial license:
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
 
         ExcelPackage excel = new ExcelPackage();
 
@@ -72,17 +70,29 @@ public static class ExcelWriter
 
     public static void SaveXLSX(string path, ExcelLearningData[] data)
     {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        int recordIndex = 2;
 
+        ExcelPackage excel;
+        ExcelWorksheet workSheet;
         if (File.Exists(path))
-            File.Delete(path);
+        {
+            excel = new ExcelPackage(new FileInfo(path));
+            workSheet = excel.Workbook.Worksheets[0];
+            var cell = workSheet.Cells[2, 1];
+            while (workSheet.Cells[recordIndex, 1].Value != null)
+                recordIndex++;
+        }
+        else
+        {
+            (excel, workSheet) = CreateXLSX(path);
+        }
 
-        var (excel,workSheet) = CreateXLSX(path);
 
         // Inserting the article data into excel 
         // sheet by using the for each loop 
         // As we have values to the first row  
         // we will start with second row 
-        int recordIndex = 2;
 
         foreach (var d in data)
         {

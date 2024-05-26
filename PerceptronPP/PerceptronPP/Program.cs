@@ -33,14 +33,13 @@ internal static class Program
 
     public static void Main()
     {
-        ExcelWriter.SaveXLSX(@"..\..\..\..\LearningResults\EXCEL.xlsx", new ExcelLearningData[]
-        {
-            new ExcelLearningData{Optimizer = "SDSD",Time = "10"},
-            new ExcelLearningData{Optimizer = "SDSD",Time = "10",BatchSize ="10",LearningCoefficient="6"}
-        });
         //Main2();
         //return;
-
+        ExcelWriter.SaveXLSX(@"..\..\..\..\LearningResults\EXCEL.xlsx", new ExcelLearningData[]
+{
+            new ExcelLearningData{Optimizer = "SDSD",Time = "10"},
+            new ExcelLearningData{Optimizer = "SDSD",Time = "10",BatchSize ="10",LearningCoefficient="6"}
+});
         var network = new Network(new SigmoidComputable(), 784, 30,30,10);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
