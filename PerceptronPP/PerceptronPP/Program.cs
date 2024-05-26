@@ -21,7 +21,7 @@ internal static class Program
             //.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
             .SetWeights(new ConstantWeightFactory(new[] { new[,] { { 1.43, -0.4, 0.23 } } }))
             .SetBiases(new BiasConstantProvider(0));
-        var optimazer = new RMSPropagation(0.9, network._neuronCounts.Length);
+        var optimazer = new RMSPropagation(0.9, network.Count());
         var output = network.Compute(new[] { 1d});
         network.CalculateCost(output, new[] { 1, 1, 1d });
         network.BackPropagate(output, new[] { 1, 1, 1d });
@@ -44,7 +44,7 @@ internal static class Program
         var network = new Network(new SigmoidComputable(), 784, 30,30,10);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
-			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
+			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount, WeightsProviderType.Random, 0.5))
 			.SetBiases(new BiasConstantProvider(0));
 
         IEnumerable<double[]> GetSample(Accord.IO.IdxReader reader)
@@ -79,7 +79,7 @@ internal static class Program
 
         int n;
 
-        Learning.Learn(network, new RMSPropagation(0.9,network._neuronCounts.Length), 4, 0.1, images.Take(600).ToArray(), labels.Take(600).ToArray());
+        Learning.Learn(network, new RMSPropagation(0.9,network.Count()), 4, 0.1, images.Take(600).ToArray(), labels.Take(600).ToArray());
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray() }, new[] { 0 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(6000).ToArray(), (Dict[1].Take(5000)).ToArray() }, new[] { 0,1 });
         //for (n = 0; n < 1; n++) LERN(network, new[] { Dict[0].Take(5000).ToArray(), (Dict[1].Take(5000)).ToArray(), (Dict[2].Take(5000)).ToArray() }, new[] { 0,1,2 });

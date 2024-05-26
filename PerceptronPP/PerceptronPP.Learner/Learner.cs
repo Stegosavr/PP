@@ -39,14 +39,14 @@ public class Learner
 			CalculateCost(network, output, expectedOutput);
 			if ((i + 1) % batchSize != 0) continue;
 
-			network.GradientDescent(new RMSPropagation(0.9, network._neuronCounts.Length), learningCoefficient);
+			network.GradientDescent(new RMSPropagation(0.9, network.Count()), learningCoefficient);
 			lastCost = network.GetCost() / batchSize;
 			WriteStepData(lastCost, i);
 			network.ResetCost();
 		}
 
 		if ((i) % batchSize == 0) return new[] { lastCost, i };
-		network.GradientDescent(new RMSPropagation(0.9, network._neuronCounts.Length), learningCoefficient);
+		network.GradientDescent(new RMSPropagation(0.9, network.Count()), learningCoefficient);
 		var correctedLastCost = network.GetCost() / (i % batchSize);
 		WriteStepData(correctedLastCost, i);
 		return new[] { correctedLastCost, i };
