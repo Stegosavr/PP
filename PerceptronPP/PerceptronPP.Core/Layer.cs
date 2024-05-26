@@ -20,6 +20,21 @@ public class Layer
 
 	private readonly BackPropagationData _backPropData;
 
+	public int GetNeuronsCount()
+	{
+		return _neuronsCount;
+	}
+	
+	public Matrix<double> GetBiases()
+	{
+		return _biases;
+	}
+
+	public Matrix<double> GetWeights()
+	{
+		return _weights;
+	}
+	
 	public Layer(int neurons, int nextNeurons = 0)
 	{
 		_neuronsCount = neurons;
@@ -93,8 +108,7 @@ public class Layer
 
 	public Matrix<double> BackPropagate(Matrix<double> output)
 	{
-		Matrix<double> weightsDer, biasesDer, activationsDer, neuronInputDer;
-		(weightsDer, biasesDer, activationsDer, neuronInputDer) = 
+		var (weightsDer, biasesDer, activationsDer, neuronInputDer) = 
 			(_backPropData.WeightsDerivative, _backPropData.BiasesDerivative, 
 			_backPropData.ActivationDerivative,_backPropData.NeuronsInputSignalDerivative);
 		var outputByinputDer = CreateMatrix.Dense<double>(1,output.ColumnCount);

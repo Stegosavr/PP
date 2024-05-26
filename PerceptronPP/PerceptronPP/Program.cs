@@ -8,6 +8,7 @@ using Accord.IO;
 using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 
 namespace PerceptronPP;
 
@@ -43,23 +44,24 @@ internal static class Program
         var network = new Network(new SigmoidComputable(), 784, 30,30,10);//3,4,3
 		network
 			//.SetWeights(new ConstantWeightFactory(new[] { new[,] { { 0.5 }, { 2.0 } }, new[,] { { 1, 1.0 } } }))
-			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount,WeightsProviderType.Random,0.5))
+			.SetWeights(new RandomWeightsFactory(network.GetNeuronCount))
 			.SetBiases(new BiasConstantProvider(0));
 
-        IEnumerable<double[]> GetSample(IdxReader reader)
+        IEnumerable<double[]> GetSample(Accord.IO.IdxReader reader)
 		{
-			for (int i=0;i<reader.Samples;i++)
+			for (var i=0;i<reader.Samples;i++)
 			{
 				yield return ((byte[])reader.ReadVector()).Select(e=>(int)e/255.0).ToArray();
 			}
 		}
-        IEnumerable<int> GetLabel(IdxReader reader)
-        {
-            for (int i = 0; i < reader.Samples; i++)
-            {
-                yield return (byte)reader.ReadValue();
-            }
-        }
+
+		IEnumerable<int> GetLabel(IdxReader reader)
+		{
+			for (var i = 0; i < reader.Samples; i++)
+			{
+				yield return (byte)reader.ReadValue();
+			}
+		}
 
 
         using var mnist = new IdxReader(@"..\..\..\..\Datasets\MNIST\train-images.idx3-ubyte");
@@ -136,9 +138,9 @@ internal static class Program
 
     public static void LERN(Network network,double[][][] trainData,int[] expectedOutput)
     {
-        for (int i = 0; i < 5000; i++)
+        for (var i = 0; i < 5000; i++)
         {
-            for (int num = 0; num < trainData.Length; num++)
+            for (var num = 0; num < trainData.Length; num++)
             {
                 Learning.Iterate(network, trainData[num][i], expectedOutput[num]);
 
