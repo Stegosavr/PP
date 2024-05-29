@@ -38,7 +38,7 @@ public static class Program
 
 		//learner.Test(learnTime, GetSample(testImages).ToArray(), GetLabel(testLabels).ToArray());
 
-		WeightsOperator.SaveToFile(network, "29-05-24.txt");
+		WeightsOperator.SaveToFile(network, "weights.txt");
 
 		var learnTime = learner.Learn(network, trainingMnist.Item1.Take(100).ToArray(), 
 			trainingMnist.Item2.Take(100).ToArray(), 5, 0.05);
