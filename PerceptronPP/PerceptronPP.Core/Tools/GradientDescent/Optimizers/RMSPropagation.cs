@@ -10,7 +10,7 @@ namespace PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 
 public class RMSPropagation : IOptimizer
 {
-    public string Name { get; } = nameof(StochasticGradientDescent);
+    public string Name { get; } = nameof(RMSPropagation);
     private List<GradientDescentData> _gradientDescentData;
     private readonly double _beta;
 

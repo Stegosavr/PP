@@ -51,9 +51,9 @@ public class Learner2
 			result = Test(network, testData, expectedTestOutputs);
 			ExcelWriter.SaveNetworkParameters(
 				_network, _optimizer, batchSize,
-				parameterToChange is Parameters.LearningCoefficient ? (int)changeTo : 0,
+				0,//parameterToChange is Parameters.BatchSize ? (int)changeTo : 0,
 				learningCoefficient,
-				parameterToChange is Parameters.BatchSize ? changeTo : 0,
+				0,//parameterToChange is Parameters.LearningCoefficient ? changeTo : 0,
 				trainData.Length, result, ts.TotalSeconds);
 			learningCoefficient += learningDelta;
 			batchSize += batchDelta;

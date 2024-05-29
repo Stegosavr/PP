@@ -10,7 +10,7 @@ namespace PerceptronPP.Core.Tools.GradientDescent.Optimizers;
 
 public class MomentumSGD : IOptimizer
 {
-    public string Name { get; } = nameof(StochasticGradientDescent);
+    public string Name { get; } = nameof(MomentumSGD);
     private List<GradientDescentData> _gradientDescentData;
     private readonly double _beta;
 
