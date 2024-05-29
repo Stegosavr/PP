@@ -16,4 +16,9 @@ public class StochasticGradientDescent : IOptimizer
     {
         currentParameters -= parametersDerivative * coefficient;
     }
+
+    public IOptimizer Clone()
+    {
+        return this;
+    }
 }

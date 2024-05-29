@@ -2,37 +2,29 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Accord/3.8.2-alpha": {
+      "Accord/3.8.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Accord.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Accord.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Accord.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Accord.dll": {}
         },
         "build": {
           "build/Accord.targets": {}
         }
       },
-      "Accord.IO/3.8.2-alpha": {
+      "Accord.IO/3.8.0": {
         "type": "package",
         "dependencies": {
-          "Accord": "3.8.2-alpha",
+          "Accord": "3.8.0",
           "SharpZipLib": "0.86.0"
         },
         "compile": {
-          "lib/netstandard2.0/Accord.IO.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Accord.IO.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Accord.IO.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Accord.IO.dll": {}
         }
       },
       "EPPlus/7.1.2": {
@@ -47,14 +39,10 @@
           "System.Text.Encoding.CodePages": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/EPPlus.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/EPPlus.dll": {}
         },
         "runtime": {
-          "lib/net6.0/EPPlus.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/EPPlus.dll": {}
         }
       },
       "EPPlus.Interfaces/6.1.1": {
@@ -82,14 +70,10 @@
       "MathNet.Numerics/5.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/MathNet.Numerics.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/MathNet.Numerics.dll": {}
         },
         "runtime": {
-          "lib/net6.0/MathNet.Numerics.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/MathNet.Numerics.dll": {}
         }
       },
       "Microsoft.Extensions.Configuration/6.0.0": {
@@ -99,14 +83,10 @@
           "Microsoft.Extensions.Primitives": "6.0.0"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll": {}
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
@@ -115,14 +95,10 @@
           "Microsoft.Extensions.Primitives": "6.0.0"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         }
       },
       "Microsoft.Extensions.Configuration.FileExtensions/6.0.0": {
@@ -135,14 +111,10 @@
           "Microsoft.Extensions.Primitives": "6.0.0"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.FileExtensions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.FileExtensions.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Configuration.FileExtensions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.FileExtensions.dll": {}
         }
       },
       "Microsoft.Extensions.Configuration.Json/6.0.0": {
@@ -155,14 +127,10 @@
           "System.Text.Json": "6.0.0"
         },
         "compile": {
-          "lib/netstandard2.1/Microsoft.Extensions.Configuration.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.1/Microsoft.Extensions.Configuration.Json.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Microsoft.Extensions.Configuration.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.1/Microsoft.Extensions.Configuration.Json.dll": {}
         }
       },
       "Microsoft.Extensions.FileProviders.Abstractions/6.0.0": {
@@ -171,14 +139,10 @@
           "Microsoft.Extensions.Primitives": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -192,14 +156,10 @@
           "Microsoft.Extensions.Primitives": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/Microsoft.Extensions.FileProviders.Physical.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.FileProviders.Physical.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Extensions.FileProviders.Physical.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.FileProviders.Physical.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -208,14 +168,10 @@
       "Microsoft.Extensions.FileSystemGlobbing/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Microsoft.Extensions.FileSystemGlobbing.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.FileSystemGlobbing.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Extensions.FileSystemGlobbing.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.FileSystemGlobbing.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -227,14 +183,10 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/Microsoft.Extensions.Primitives.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.Primitives.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Extensions.Primitives.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.Primitives.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -243,27 +195,19 @@
       "Microsoft.IO.RecyclableMemoryStream/3.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {}
         }
       },
       "Microsoft.Win32.SystemEvents/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -287,14 +231,10 @@
       "System.ComponentModel.Annotations/5.0.0": {
         "type": "package",
         "compile": {
-          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {}
         }
       },
       "System.Drawing.Common/6.0.0": {
@@ -303,14 +243,10 @@
           "Microsoft.Win32.SystemEvents": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Drawing.Common.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Drawing.Common.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Drawing.Common.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Drawing.Common.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -329,14 +265,10 @@
       "System.Formats.Asn1/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.Formats.Asn1.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Formats.Asn1.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Formats.Asn1.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Formats.Asn1.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -345,14 +277,10 @@
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -364,14 +292,10 @@
           "System.Formats.Asn1": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Security.Cryptography.Pkcs.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Security.Cryptography.Pkcs.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Security.Cryptography.Pkcs.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Security.Cryptography.Pkcs.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -389,14 +313,10 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Text.Encoding.CodePages.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Text.Encoding.CodePages.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Text.Encoding.CodePages.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Text.Encoding.CodePages.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -414,14 +334,10 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Text.Encodings.Web.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Text.Encodings.Web.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Text.Encodings.Web.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Text.Encodings.Web.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -440,14 +356,10 @@
           "System.Text.Encodings.Web": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Text.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Text.Json.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Text.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Text.Json.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -470,14 +382,14 @@
     }
   },
   "libraries": {
-    "Accord/3.8.2-alpha": {
-      "sha512": "g/EKYGdeMKTMJt7XtB65f+RyVW5ALfU1f1T1dpIGXOqzBtaaNK+OGB6pFY9RFrjKPQNUlnKUWF2jwH5knM+X7A==",
+    "Accord/3.8.0": {
+      "sha512": "7kJrB570dO5ELim+2KWQNozuvWO9/BuZfZspdFy36fcWPNF2CEccblLuILeUlI8QJYd2DlBy0bfK8BlCx/uayA==",
       "type": "package",
-      "path": "accord/3.8.2-alpha",
+      "path": "accord/3.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "accord.3.8.2-alpha.nupkg.sha512",
+        "accord.3.8.0.nupkg.sha512",
         "accord.nuspec",
         "build/Accord.dll.config",
         "build/Accord.targets",
@@ -505,14 +417,14 @@
         "lib/netstandard2.0/Accord.xml"
       ]
     },
-    "Accord.IO/3.8.2-alpha": {
-      "sha512": "0ZmNKPYq1nQLxSfsLd2OSMyNtBOITRcHPd6sowKk3WD3/YoN2B0znsHeQoPdFAz+Fi06VqFLn3UAPOIIEQz4aA==",
+    "Accord.IO/3.8.0": {
+      "sha512": "9t4eat0jqWFGILCzqPuFjQC+vHnDtY2O8vAFTHNIeT5jHXgXIw+dPBpjFoxKtQ1DkiRuvIH78qIx3mD5EQyvzA==",
       "type": "package",
-      "path": "accord.io/3.8.2-alpha",
+      "path": "accord.io/3.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "accord.io.3.8.2-alpha.nupkg.sha512",
+        "accord.io.3.8.0.nupkg.sha512",
         "accord.io.nuspec",
         "lib/net35-unity full v3.5/Accord.IO.dll",
         "lib/net35-unity full v3.5/Accord.IO.xml",
@@ -1205,37 +1117,40 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Accord.IO >= 3.8.2-alpha",
+      "Accord.IO >= 3.8.0",
       "PerceptronPP.Core >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "/home/philainel/.nuget/packages/": {}
+    "C:\\Users\\ilya1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Learner/PerceptronPP.Learner.csproj",
+      "projectUniqueName": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj",
       "projectName": "PerceptronPP.Learner",
-      "projectPath": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Learner/PerceptronPP.Learner.csproj",
-      "packagesPath": "/home/philainel/.nuget/packages/",
-      "outputPath": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Learner/obj/",
+      "projectPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj",
+      "packagesPath": "C:\\Users\\ilya1\\.nuget\\packages\\",
+      "outputPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/philainel/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\ilya1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "D:\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Core/PerceptronPP.Core.csproj": {
-              "projectPath": "/home/philainel/Projects/PP/PerceptronPP/PerceptronPP.Core/PerceptronPP.Core.csproj"
+            "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj": {
+              "projectPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj"
             }
           }
         }
@@ -1252,7 +1167,7 @@
         "dependencies": {
           "Accord.IO": {
             "target": "Package",
-            "version": "[3.8.2-alpha, )"
+            "version": "[3.8.0, )"
           }
         },
         "imports": [
@@ -1261,31 +1176,16 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.29, 6.0.29]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.linux-x64",
-            "version": "[6.0.29, 6.0.29]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.29, 6.0.29]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.104/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -1294,7 +1194,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'SharpZipLib 0.86.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "message": "Пакет \"SharpZipLib 0.86.0\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \"net6.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
       "libraryId": "SharpZipLib",
       "targetGraphs": [
         "net6.0"

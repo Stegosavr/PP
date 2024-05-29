@@ -10,7 +10,7 @@ public static class WeightsOperator
 {
 	public static Tuple<MapWeightsFactory, BiasMapProvider, int[]> ReadFromFile(string path)
 	{
-		var lines = File.ReadLines(Path.Combine("..", "..", "..", "..", path), Encoding.UTF8);
+		var lines = File.ReadLines(Path.Combine("..", "..", "..", path), Encoding.UTF8);
 		using var linesEnumerator = lines.GetEnumerator();
 		if (!linesEnumerator.MoveNext()) throw new Exception("Empty file");
 		var networkInfo = linesEnumerator.Current.Split(",").Select(x => int.Parse(x)).ToArray();

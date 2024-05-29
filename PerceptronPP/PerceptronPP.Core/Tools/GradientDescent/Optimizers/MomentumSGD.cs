@@ -39,4 +39,9 @@ public class MomentumSGD : IOptimizer
             currentParameters -= velocity * coefficient;
         }
     }
+
+    public IOptimizer Clone()
+    {
+        return new MomentumSGD(_beta, _gradientDescentData.Count + 1);
+    }
 }

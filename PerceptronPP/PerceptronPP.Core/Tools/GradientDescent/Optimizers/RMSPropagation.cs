@@ -23,6 +23,11 @@ public class RMSPropagation : IOptimizer
         _beta = beta;
     }
 
+    public IOptimizer Clone()
+    {
+        return new RMSPropagation(_beta, _gradientDescentData.Count + 1);
+    }
+
     public void GradientDescent(ParameterType type, ref Matrix<double> currentParameters, 
         Matrix<double> parametersDerivative, double coefficient, int layerIndex)
     {

@@ -8,4 +8,6 @@ public interface IOptimizer
 	public string Name { get; }
 	public void GradientDescent(ParameterType type,ref Matrix<double> currentParameters,
 		Matrix<double> parametersDerivative, double coefficient, int layerIndex);
+
+	public IOptimizer Clone();
 }

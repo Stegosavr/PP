@@ -109,7 +109,15 @@ public class Network : IEnumerable<Layer>
         //_cost += weightsCost * 0.0000001 / 2;
     }
 
-	public void CalculateWeightsCost()
+	public void CalculateCost(Matrix<double> output, Matrix<double> expectedOutput)
+	{
+		for (var i = 0; i < output.ColumnCount; i++)
+		{
+			_cost += Math.Pow(output[0,i] - expectedOutput[0,i], 2);
+		}
+	}
+
+	public void CalculateWeightsCost(double[] output, double[] expectedOutput)
     {
 		var weightsCost = 0.0;
 		for (int i = 0; i < _layers.Length - 1; i++)
@@ -136,6 +144,18 @@ public class Network : IEnumerable<Layer>
 	public void BackPropagate(double[] networkOutput, double[] expectedNetworkOutput)
 	{
 		var output = 2 * (Layer.MatrixArray(networkOutput) - Layer.MatrixArray(expectedNetworkOutput));
+		_layers.Reverse().Skip(1).Aggregate
+		(
+			output,
+			(current, layer) => layer.BackPropagate(current)
+		);
+
+		_iterations++;
+	}
+
+	public void BackPropagate(Matrix<double> networkOutput, Matrix<double> expectedNetworkOutput)
+	{
+		var output = 2 * (networkOutput - expectedNetworkOutput);
 		_layers.Reverse().Skip(1).Aggregate
 		(
 			output,

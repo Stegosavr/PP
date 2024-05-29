@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PerceptronPP.Core\PerceptronPP.Core.csproj" />
+    <ProjectReference Include="..\PerceptronPP.Learner\PerceptronPP.Learner.csproj" />
   </ItemGroup>
 
 </Project>

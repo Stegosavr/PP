@@ -3,6 +3,8 @@ using MathNet.Numerics.LinearAlgebra.Single;
 using PerceptronPP.Core;
 using PerceptronPP.Core.Tools.Computable;
 using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
+using PerceptronPP.Core.FileManager.Excel;
+
 
 namespace PerceptronPP.Learner;
 

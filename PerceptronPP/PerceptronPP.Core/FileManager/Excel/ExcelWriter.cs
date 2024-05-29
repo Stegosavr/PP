@@ -7,17 +7,39 @@ using System.IO;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Text.RegularExpressions;
+using PerceptronPP.Core.Tools.GradientDescent.Optimizers;
+using PerceptronPP.Core.Tools.Computable;
 
 namespace PerceptronPP.Core.FileManager.Excel;
 
 public static class ExcelWriter
 {
-    //private ExcelLearningData _data { get; set; }
+    public static void SaveNetworkParameters(Network network,IOptimizer optimizer,
+        int batchSize, int batchSizeTo, double learningCoefficient, double learningTo,
+        int trainingDataSize, double efficiency, double learningTimeInSeconds)
+    {
+        var type = network.GetType();
+        var neuronsCount = String.Join('-',((int[])(type.GetField("_neuronCounts", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(network))).Select(e=>e.ToString()));
+        var activationFunc = ((IComputable)(type.GetField("_activationComputable", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(network))).Name;
 
-    //public ExcelWriter(ExcelLearningData data)
-    //{
-    //    _data = data;
-    //}
+        ExcelWriter.SaveXLSX(@"..\..\..\..\LearningResults\parameters.xlsx", new ExcelLearningData[]
+        {
+            new ExcelLearningData
+            {
+                    HiddenLayers = neuronsCount,
+                    ActivationFunction = activationFunc,
+                    Optimizer = optimizer.Name,
+                    BatchSize = batchSize.ToString(),
+                    BatchSize2 = batchSizeTo == 0 ? null : batchSizeTo.ToString(),
+                    LearningCoefficient = learningCoefficient.ToString(),
+                    LearningCoefficient2 = learningTo == 0 ? null : learningTo.ToString(),
+                    TrainingDataSize = trainingDataSize.ToString(),
+                    PredictionEfficiency = efficiency.ToString(),
+                    Time = learningTimeInSeconds.ToString()
+            }
+        });
+    }
+
     public static Tuple<ExcelPackage,ExcelWorksheet> CreateXLSX(string path)
     {
         // If you use EPPlus in a noncommercial context
@@ -39,16 +61,6 @@ public static class ExcelWriter
         {
             workSheet.Cells[1, ++i].Value = name;
         }
-
-
-        // Header of the Excel sheet 
-        //workSheet.Cells[1, 1].Value = "Optimizer";
-        //workSheet.Cells[1, 2].Value = "Hidden layers";
-        //workSheet.Cells[1, 3].Value = "Batch size";
-        //workSheet.Cells[1, 5].Value = "Learning coefficient";
-        //workSheet.Cells[1, 7].Value = "Training data size";
-        //workSheet.Cells[1, 8].Value = "Prediction Efficiency";
-        //workSheet.Cells[1, 9].Value = "Time";
 
         // By default, the column width is not  
         // set to auto fit for the content 
