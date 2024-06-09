@@ -12,10 +12,13 @@ public class Learner2
 {
 	private readonly Network _network;
 	private readonly IOptimizer _optimizer;
-	public Learner2(Network network, IOptimizer optimizer)
+	private readonly string _xlsxPath;
+
+	public Learner2(Network network, IOptimizer optimizer, string xlsxPath = "parameters.xlsx")
 	{
 		_network = network;
 		_optimizer = optimizer;
+		_xlsxPath = xlsxPath;
 	}
 
 	public void LoopLearn
@@ -23,7 +26,8 @@ public class Learner2
 	double[][] trainData, int[] expectedOutputs,
 	double[][] testData, int[] expectedTestOutputs,
 	Parameters parameterToChange, double changeTo,
-	int iterationsNumber)
+	int iterationsNumber,
+	double weightsDistribution = 0)
 	{
 		double learningDelta = 0;
 		int batchDelta = 0;
@@ -43,7 +47,7 @@ public class Learner2
 			Stopwatch stopWatch = new Stopwatch();
 			stopWatch.Start();
 
-			var network = Learn(_network, trainData, expectedOutputs, batchSize, learningCoefficient);
+			var network = Learn(_network, trainData, expectedOutputs, batchSize, learningCoefficient,0,0);
 			
 			stopWatch.Stop();
 			TimeSpan ts = stopWatch.Elapsed;
@@ -54,9 +58,12 @@ public class Learner2
 				0,//parameterToChange is Parameters.BatchSize ? (int)changeTo : 0,
 				learningCoefficient,
 				0,//parameterToChange is Parameters.LearningCoefficient ? changeTo : 0,
-				trainData.Length, result, ts.TotalSeconds);
+				trainData.Length, result, ts.TotalSeconds,
+				weightsDistribution,
+				_xlsxPath);
 			learningCoefficient += learningDelta;
 			batchSize += batchDelta;
+			WeightsOperator.SaveToFile(network,"09-06-24.txt");
 		}
 	}
 
@@ -74,6 +81,7 @@ public class Learner2
 		var lastCost = 0d;
 		for (;; i++)
 		{
+
 			var isTrainingMoveCompleted = trainingEnumerator.MoveNext();
 			var isLabelsMoveCompleted = labelsEnumerator.MoveNext();
 			if (isTrainingMoveCompleted != isLabelsMoveCompleted)

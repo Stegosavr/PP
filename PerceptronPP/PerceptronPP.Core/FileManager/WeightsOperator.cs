@@ -10,21 +10,21 @@ public static class WeightsOperator
 {
 	public static Tuple<MapWeightsFactory, BiasMapProvider, int[]> ReadFromFile(string path)
 	{
-		var lines = File.ReadLines(Path.Combine("..", "..", "..", path), Encoding.UTF8);
+		var lines = File.ReadLines(Path.Combine("..", "..", "..", "..", "Weights", path), Encoding.UTF8);
 		using var linesEnumerator = lines.GetEnumerator();
 		if (!linesEnumerator.MoveNext()) throw new Exception("Empty file");
 		var networkInfo = linesEnumerator.Current.Split(",").Select(x => int.Parse(x)).ToArray();
 		if (networkInfo.Length == 0) throw new Exception("Wtf");
 
 		var weights = new double[networkInfo.Length][,];
-		var biases = new double[networkInfo.Length, networkInfo.Max()];
+		var biases = new double[networkInfo.Length, networkInfo.Skip(1).Max()];
 		var currentLine = 1;
 
 		for (var i = 0; i < weights.Length - 1; i++)
 		{
 			weights[i] = new double[networkInfo[i], networkInfo[i + 1]];
 			for (var x = 0; x < networkInfo[i]; x++)
-			for (var y = 0; x < networkInfo[i + 1]; y++)
+			for (var y = 0; y < networkInfo[i + 1]; y++)
 			{
 				if (!linesEnumerator.MoveNext()) throw new Exception("File length mismatch with network info.");
 				currentLine++;
@@ -35,15 +35,18 @@ public static class WeightsOperator
 		}
 
 		var xLength = biases.GetLength(0);
-		var yLength = biases.GetLength(1);
-		for (var x = 0; x < xLength; x++)
-		for (var y = 0; y < yLength; y++)
+		//var yLength = biases.GetLength(1);
+		for (var x = 0; x < xLength-1; x++)
 		{
-			if (!linesEnumerator.MoveNext()) throw new Exception("File length mismatch with network info.");
-			currentLine++;
-			if (!double.TryParse(linesEnumerator.Current, out var n))
-				throw new Exception($"Cannot parse number on {currentLine} lane.");
-			biases[x, y] = n;
+			var yLength = networkInfo[x+1];
+			for (var y = 0; y < yLength; y++)
+			{
+				if (!linesEnumerator.MoveNext()) throw new Exception("File length mismatch with network info.");
+				currentLine++;
+				if (!double.TryParse(linesEnumerator.Current, out var n))
+					throw new Exception($"Cannot parse number on {currentLine} lane.");
+				biases[x, y] = n;
+			}
 		}
 		// foreach (var line in lines)
 		// {
@@ -65,7 +68,7 @@ public static class WeightsOperator
 		lines = weights.SelectMany(w => w.Cast<double>()).Aggregate(lines,
 			(current, l) => current.Append(l.ToString(CultureInfo.CurrentCulture)));
 		lines = biases.Aggregate(lines, (current, b) => current.Append(b.ToString(CultureInfo.CurrentCulture)));
-		var filepath = Path.Combine("..", "..", "..", "..", path);
+		var filepath = Path.Combine("..", "..", "..", "..", "Weights", path);
 		using var outputFile = new StreamWriter(filepath);
 		foreach (var line in lines)
 			outputFile.WriteLine(line);

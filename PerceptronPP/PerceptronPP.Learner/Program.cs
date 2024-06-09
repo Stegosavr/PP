@@ -10,7 +10,19 @@ namespace PerceptronPP.Learner;
 public static class Program
 {
 	private static readonly IComputable Computable = new SigmoidComputable();
-	private static readonly int[] NeuronCounts = new[] { 784, 16, 16, 10 };
+	private static readonly int[] NeuronCounts = new[] { 784, 30, 30, 10 };
+
+    //public static void Test()
+    //{
+    //    var network = new Network(Computable, new[] {3,2,4});
+    //    network.SetWeights(new ConstantWeightFactory(new[] {
+    //        new double[,] { { 0, 0 }, { 0.5, 0.5}, { 0.5, 0.5 } },
+    //        new double[,] { { 1.0 }, { 2.0 } } }))
+    //        .SetBiases(new BiasConstantProvider(2));
+    //    WeightsOperator.SaveToFile(network, "test.txt");
+    //    var weights = WeightsOperator.ReadFromFile("test.txt");
+    //    var newNetwork = new Network(Computable, weights.Item3).SetWeights(weights.Item1).SetBiases(weights.Item2);
+    //}
 
 	public static void Main()
 	{
@@ -26,67 +38,92 @@ public static class Program
 		using var imagesData = new IdxReader(@"../../../../Datasets/MNIST/train-images.idx3-ubyte");
 		using var labelsData = new IdxReader(@"../../../../Datasets/MNIST/train-labels.idx1-ubyte");
 
-		var learner = new Learner2(network, new RMSPropagation(0.9,network.GetLayerCount()));
+		var learner = new Learner2(network, new StochasticGradientDescent(), "09-06-24.xlsx");
+        //new RMSPropagation(0.9, network.GetLayerCount()
+        //Console.WriteLine($"Learning elapsed {learnTime.ToString()}");
 
-		//Console.WriteLine($"Learning elapsed {learnTime.ToString()}");
-
-		using var testImages = new IdxReader(@"..\..\..\..\Datasets\MNIST\t10k-images.idx3-ubyte");
+        using var testImages = new IdxReader(@"..\..\..\..\Datasets\MNIST\t10k-images.idx3-ubyte");
 		using var testLabels = new IdxReader(@"..\..\..\..\Datasets\MNIST\t10k-labels.idx1-ubyte");
 
 		var trainingMnist = Tuple.Create(GetSample(imagesData).ToArray(), GetLabel(labelsData).ToArray());
 		var testMnist = Tuple.Create(GetSample(testImages).ToArray(), GetLabel(testLabels).ToArray());
 
 		//learner.Test(learnTime, GetSample(testImages).ToArray(), GetLabel(testLabels).ToArray());
+		//WeightsOperator.SaveToFile(network, "08-06-24.txt");
+		//var weights = WeightsOperator.ReadFromFile("29-05-24.txt");
+		//network.SetBiases(weights.Item2).SetWeights(weights.Item1);
 
-		WeightsOperator.SaveToFile(network, "weights.txt");
+        learner.LoopLearn(1, 3, trainingMnist.Item1, trainingMnist.Item2,
+            testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+            1, 1);
 
-		var learnTime = learner.Learn(network, trainingMnist.Item1.Take(100).ToArray(), 
-			trainingMnist.Item2.Take(100).ToArray(), 5, 0.05);
+        //var learnTime = learner.Learn(network, trainingMnist.Item1.ToArray(), 
+        //	trainingMnist.Item2.ToArray(), 1, 3);
+        //WeightsOperator.SaveToFile(learnTime, "08-06-24.txt");
 
 
-		learner.LoopLearn(30,0.01,trainingMnist.Item1,trainingMnist.Item2,
-			testMnist.Item1,testMnist.Item2,Parameters.BatchSize,
-			1,30);
-		learner.LoopLearn(30, 0.05, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 0.1, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 0.2, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 0.3, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 0.4, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 0.5, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 0.75, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 1, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 1.5, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 2, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 3, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
-		learner.LoopLearn(30, 5, trainingMnist.Item1, trainingMnist.Item2,
-			testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
-			1, 30);
+        //for (var j = 0; j < 10; j++)
+        //{
+        //    for (var i = 0.5; i > 0.01; i -= 0.1)
+        //    {
+        //        network.SetWeights(new RandomWeightsFactory(network.GetNeuronCount, WeightsProviderType.GaussianRandom, i));
+        //        learner = new Learner2(network, new StochasticGradientDescent(), "03-06-24(5).xlsx");
+        //        learner.LoopLearn(1, 3, trainingMnist.Item1, trainingMnist.Item2,
+        //            testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //            1, 1, i);
+        //    }
+        //}
+        //for (var i = 0.3; i > 0; i -= 0.05)
+        //{
+        //    learner.LoopLearn(5, i, trainingMnist.Item1, trainingMnist.Item2,
+        //        testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //        5, 1);
+        //}
 
-	}
 
-	private static IEnumerable<int> GetLabel(IdxReader reader)
+        //learner.LoopLearn(30, 0.01, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 30);
+        //learner.LoopLearn(30, 0.05, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 30);
+        //learner.LoopLearn(20, 0.1, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(30, 0.2, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 30);
+        //learner.LoopLearn(20, 0.3, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(30, 0.4, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 30);
+        //learner.LoopLearn(20, 0.5, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(20, 0.75, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(20, 1, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(20, 1.5, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(20, 2, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(30, 3, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+        //learner.LoopLearn(30, 5, trainingMnist.Item1, trainingMnist.Item2,
+        //    testMnist.Item1, testMnist.Item2, Parameters.BatchSize,
+        //    1, 20);
+
+    }
+
+    private static IEnumerable<int> GetLabel(IdxReader reader)
 	{
 		for (var i = 0; i < reader.Samples; i++)
 		{

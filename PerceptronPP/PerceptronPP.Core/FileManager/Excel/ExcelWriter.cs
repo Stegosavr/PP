@@ -16,13 +16,16 @@ public static class ExcelWriter
 {
     public static void SaveNetworkParameters(Network network,IOptimizer optimizer,
         int batchSize, int batchSizeTo, double learningCoefficient, double learningTo,
-        int trainingDataSize, double efficiency, double learningTimeInSeconds)
+        int trainingDataSize, double efficiency, double learningTimeInSeconds,
+        double weightsDistribution,
+        string path = "parameters.xlsx")
     {
         var type = network.GetType();
         var neuronsCount = String.Join('-',((int[])(type.GetField("_neuronCounts", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(network))).Select(e=>e.ToString()));
         var activationFunc = ((IComputable)(type.GetField("_activationComputable", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(network))).Name;
+        var filepath = Path.Combine("..", "..", "..", "..", "LearningResults", path);
 
-        ExcelWriter.SaveXLSX(@"..\..\..\..\LearningResults\parameters.xlsx", new ExcelLearningData[]
+        ExcelWriter.SaveXLSX(filepath, new ExcelLearningData[]
         {
             new ExcelLearningData
             {
@@ -35,7 +38,10 @@ public static class ExcelWriter
                     LearningCoefficient2 = learningTo == 0 ? null : learningTo.ToString(),
                     TrainingDataSize = trainingDataSize.ToString(),
                     PredictionEfficiency = efficiency.ToString(),
-                    Time = learningTimeInSeconds.ToString()
+                    Time = learningTimeInSeconds.ToString(),
+
+                    WeightsDistributionType = "GaussianRandom",
+                    WeightsDistribution = weightsDistribution == 0 ? null : weightsDistribution.ToString()
             }
         });
     }

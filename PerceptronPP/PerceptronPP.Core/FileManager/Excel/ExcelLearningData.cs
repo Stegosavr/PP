@@ -18,9 +18,14 @@ public class ExcelLearningData
     public string LearningCoefficient;
     public string LearningCoefficient2;
 
+    public string WeightsDistributionType;
+    public string WeightsDistribution;
+
     public string TrainingDataSize;
     public string PredictionEfficiency;
     public string Time;
+
+
     public ExcelLearningData()
     {
     }
