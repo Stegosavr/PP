@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="MathNet.Numerics">
+        <HintPath>..\..\..\..\.nuget\packages\mathnet.numerics\5.0.0\lib\net6.0\MathNet.Numerics.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="EPPlus" Version="7.1.2" />
+      <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+    </ItemGroup>
+
+</Project>

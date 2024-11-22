@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj": {}
+  },
+  "projects": {
+    "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj",
+        "projectName": "PerceptronPP.Core",
+        "projectPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj",
+        "packagesPath": "C:\\Users\\ilya1\\.nuget\\packages\\",
+        "outputPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ilya1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            },
+            "MathNet.Numerics": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj",
+        "projectName": "PerceptronPP.Learner",
+        "projectPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\PerceptronPP.Learner.csproj",
+        "packagesPath": "C:\\Users\\ilya1\\.nuget\\packages\\",
+        "outputPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Learner\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ilya1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj": {
+                "projectPath": "D:\\Progs\\VisualStudio\\C#\\PP\\PerceptronPP\\PerceptronPP.Core\\PerceptronPP.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Accord.IO": {
+              "target": "Package",
+              "version": "[3.8.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
